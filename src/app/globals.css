@@ -1,26 +1,65 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --font-display: "Satoshi", "sans-serif";
+
+  /* ... */
+
+  --color-primary: rgb(0 105 112);
+  --color-surface-tint: rgb(0 105 112);
+  --color-on-primary: rgb(255 255 255);
+  --color-primary-container: rgb(157 240 248);
+  --color-on-primary-container: rgb(0 32 34);
+  --color-secondary: rgb(123 88 13);
+  --color-on-secondary: rgb(255 255 255);
+  --color-secondary-container: rgb(255 222 169);
+  --color-on-secondary-container: rgb(39 25 0);
+  --color-tertiary: rgb(79 94 125);
+  --color-on-tertiary: rgb(255 255 255);
+  --color-tertiary-container: rgb(215 226 255);
+  --color-on-tertiary-container: rgb(10 27 54);
+  --color-error: rgb(186 26 26);
+  --color-on-error: rgb(255 255 255);
+  --color-error-container: rgb(255 218 214);
+  --color-on-error-container: rgb(65 0 2);
+  --color-background: rgb(244 250 251);
+  --color-on-background: rgb(22 29 29);
+  --color-surface: rgb(244 250 251);
+  --color-on-surface: rgb(22 29 29);
+  --color-surface-variant: rgb(218 228 229);
+  --color-on-surface-variant: rgb(63 72 73);
+  --color-outline: rgb(111 121 122);
+  --color-outline-variant: rgb(190 200 201);
+  --color-shadow: rgb(0 0 0);
+  --color-scrim: rgb(0 0 0);
+  --color-inverse-surface: rgb(43 50 50);
+  --color-inverse-on-surface: rgb(236 242 242);
+  --color-inverse-primary: rgb(128 212 220);
+  --color-primary-fixed: rgb(157 240 248);
+  --color-on-primary-fixed: rgb(0 32 34);
+  --color-primary-fixed-dim: rgb(128 212 220);
+  --color-on-primary-fixed-variant: rgb(0 79 84);
+  --color-secondary-fixed: rgb(255 222 169);
+  --color-on-secondary-fixed: rgb(39 25 0);
+  --color-secondary-fixed-dim: rgb(238 191 109);
+  --color-on-secondary-fixed-variant: rgb(94 65 0);
+  --color-tertiary-fixed: rgb(215 226 255);
+  --color-on-tertiary-fixed: rgb(10 27 54);
+  --color-tertiary-fixed-dim: rgb(183 199 234);
+  --color-on-tertiary-fixed-variant: rgb(56 71 100);
+  --color-surface-dim: rgb(213 219 219);
+  --color-surface-bright: rgb(244 250 251);
+  --color-surface-container-lowest: rgb(255 255 255);
+  --color-surface-container-low: rgb(239 245 245);
+  --color-surface-container: rgb(233 239 239);
+  --color-surface-container-high: rgb(227 233 234);
+  --color-surface-container-highest: rgb(222 228 228);
+  --color-custom-color1-color: rgb(123 88 13);
+  --color-custom-color1-on-color: rgb(255 255 255);
+  --color-custom-color1-color-container: rgb(255 222 169);
+  --color-custom-color1-on-color-container: rgb(39 25 0);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.swiper-scrollbar {
+  /* display: none; */
 }

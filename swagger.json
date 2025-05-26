@@ -1,0 +1,1469 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/customer": {
+      "post": {
+        "operationId": "create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCustomerDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Customer"
+        ]
+      },
+      "get": {
+        "operationId": "findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Customer"
+        ]
+      }
+    },
+    "/customer/{id}": {
+      "get": {
+        "operationId": "findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Customer"
+        ]
+      },
+      "patch": {
+        "operationId": "update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCustomerDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Customer"
+        ]
+      },
+      "delete": {
+        "operationId": "remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Customer"
+        ]
+      }
+    },
+    "/business": {
+      "post": {
+        "operationId": "create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBusinessDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          },
+          {
+            "JWT-auth": []
+          }
+        ],
+        "tags": [
+          "Business"
+        ]
+      },
+      "get": {
+        "operationId": "getAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "tags": [
+          "Business"
+        ]
+      }
+    },
+    "/business/{id}": {
+      "patch": {
+        "operationId": "update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": false,
+            "in": "path",
+            "description": "Business ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBusinessDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "tags": [
+          "Business"
+        ]
+      },
+      "get": {
+        "operationId": "getOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "tags": [
+          "Business"
+        ]
+      }
+    },
+    "/appointment": {
+      "post": {
+        "operationId": "create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAppointmentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "tags": [
+          "Appointment"
+        ]
+      }
+    },
+    "/employee": {
+      "post": {
+        "operationId": "create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateEmployeeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Employee created successfully"
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Create a new employee for the authenticated user’s business",
+        "tags": [
+          "Employee"
+        ]
+      }
+    },
+    "/employee/business/{businessId}": {
+      "get": {
+        "operationId": "findAllForBusiness",
+        "parameters": [
+          {
+            "name": "businessId",
+            "required": true,
+            "in": "path",
+            "description": "Business ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of employees"
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Get all employees for a specific business",
+        "tags": [
+          "Employee"
+        ]
+      }
+    },
+    "/employee/{id}": {
+      "get": {
+        "operationId": "findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Employee ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Employee details"
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Get an employee by ID",
+        "tags": [
+          "Employee"
+        ]
+      },
+      "patch": {
+        "operationId": "update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Employee ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateEmployeeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Employee updated successfully"
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Update an employee",
+        "tags": [
+          "Employee"
+        ]
+      },
+      "delete": {
+        "operationId": "remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Employee ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Employee deleted successfully"
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Delete an employee",
+        "tags": [
+          "Employee"
+        ]
+      }
+    },
+    "/services": {
+      "post": {
+        "operationId": "create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateServiceDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Service created successfully"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Parent service or business not found"
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Create a new service",
+        "tags": [
+          "services"
+        ]
+      },
+      "get": {
+        "operationId": "findAll",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number for pagination",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Number of items per page",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "isSystemService",
+            "required": false,
+            "in": "query",
+            "description": "Filter by system services (true) or non-system services (false)",
+            "schema": {
+              "example": true,
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Services retrieved successfully"
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Get all services with pagination and filtering",
+        "tags": [
+          "services"
+        ]
+      }
+    },
+    "/services/business/{businessId}": {
+      "get": {
+        "operationId": "findByBusiness",
+        "parameters": [
+          {
+            "name": "businessId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Business services retrieved successfully"
+          },
+          "404": {
+            "description": "Business not found"
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Get services by business ID",
+        "tags": [
+          "services"
+        ]
+      }
+    },
+    "/services/{id}": {
+      "get": {
+        "operationId": "findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Service retrieved successfully"
+          },
+          "404": {
+            "description": "Service not found"
+          }
+        },
+        "summary": "Get a service by ID",
+        "tags": [
+          "services"
+        ]
+      },
+      "patch": {
+        "operationId": "update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateServiceDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Service updated successfully"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Service, parent or business not found"
+          }
+        },
+        "summary": "Update a service",
+        "tags": [
+          "services"
+        ]
+      },
+      "delete": {
+        "operationId": "remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Service deleted successfully"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Service not found"
+          }
+        },
+        "summary": "Delete a service",
+        "tags": [
+          "services"
+        ]
+      }
+    },
+    "/reminder": {
+      "post": {
+        "operationId": "create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateReminderDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Reminder"
+        ]
+      },
+      "get": {
+        "operationId": "findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Reminder"
+        ]
+      }
+    },
+    "/reminder/{id}": {
+      "get": {
+        "operationId": "findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Reminder"
+        ]
+      },
+      "patch": {
+        "operationId": "update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateReminderDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Reminder"
+        ]
+      },
+      "delete": {
+        "operationId": "remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Reminder"
+        ]
+      }
+    },
+    "/user": {
+      "post": {
+        "operationId": "create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "User"
+        ]
+      },
+      "get": {
+        "operationId": "findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "User"
+        ]
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "operationId": "findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "User"
+        ]
+      },
+      "delete": {
+        "operationId": "remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "User"
+        ]
+      }
+    },
+    "/auth/send-otp": {
+      "post": {
+        "operationId": "sendOTP",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OtpRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/auth/verify-otp": {
+      "post": {
+        "operationId": "verifyOTP",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyOtpDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/prices": {
+      "post": {
+        "operationId": "create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePriceDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Price created successfully"
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Create a price for a non-system service",
+        "tags": [
+          "prices"
+        ]
+      }
+    },
+    "/prices/service/{serviceId}": {
+      "get": {
+        "operationId": "findByService",
+        "parameters": [
+          {
+            "name": "serviceId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Price retrieved successfully"
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Get the price for a service",
+        "tags": [
+          "prices"
+        ]
+      }
+    },
+    "/prices/{id}": {
+      "patch": {
+        "operationId": "update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePriceDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Price updated successfully"
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Update a price",
+        "tags": [
+          "prices"
+        ]
+      },
+      "delete": {
+        "operationId": "remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Price deleted successfully"
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Delete a price",
+        "tags": [
+          "prices"
+        ]
+      }
+    },
+    "/schedules/initiate-schedules": {
+      "post": {
+        "operationId": "initiate",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "tags": [
+          "schedules"
+        ]
+      }
+    },
+    "/schedules": {
+      "get": {
+        "operationId": "getSchedules",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Schedules retrieved successfully"
+          },
+          "403": {
+            "description": "Unauthorized to view schedules"
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Get all schedules for the business",
+        "tags": [
+          "schedules"
+        ]
+      }
+    },
+    "/schedules/{id}": {
+      "patch": {
+        "operationId": "update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateScheduleDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Schedule updated successfully"
+          },
+          "403": {
+            "description": "Unauthorized to update schedule"
+          },
+          "404": {
+            "description": "Schedule not found"
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Update a schedule",
+        "tags": [
+          "schedules"
+        ]
+      }
+    },
+    "/timeslots": {
+      "post": {
+        "operationId": "create",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "tags": [
+          "timeslots"
+        ]
+      },
+      "get": {
+        "operationId": "getAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "tags": [
+          "timeslots"
+        ]
+      },
+      "delete": {
+        "operationId": "deleteAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "tags": [
+          "timeslots"
+        ]
+      }
+    },
+    "/": {
+      "get": {
+        "operationId": "getHello",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "App"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Vaghtban API",
+    "description": "API for managing reservations",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [
+    {
+      "name": "reservations",
+      "description": ""
+    }
+  ],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "JWT-auth": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http",
+        "name": "Authorization",
+        "in": "header",
+        "description": "Enter JWT token in the format: Bearer <token>. Use the /auth/login endpoint to generate a token."
+      }
+    },
+    "schemas": {
+      "CreateCustomerDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "CreateBusinessDto": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string",
+            "description": "The ID of the user associated with the business",
+            "example": "user123",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of business",
+            "example": "Beauty Salon"
+          }
+        }
+      },
+      "UpdateBusinessDto": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string",
+            "description": "The ID of the user associated with the business",
+            "example": "user123",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of business",
+            "example": "Beauty Salon"
+          }
+        }
+      },
+      "CreateAppointmentDto": {
+        "type": "object",
+        "properties": {
+          "serviceId": {
+            "type": "string",
+            "description": "The unique identifier of the service being booked",
+            "example": "987fcdeb-1a2b-3c4d-5e6f-789abcdef123"
+          },
+          "timeslotId": {
+            "type": "string",
+            "description": "The unique identifier of the timeslot for the appointment",
+            "example": "456789ab-cdef-1234-5678-901234567890"
+          }
+        },
+        "required": [
+          "serviceId",
+          "timeslotId"
+        ]
+      },
+      "CreateEmployeeDto": {
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "type": "string",
+            "description": "The full name of the employee",
+            "example": "John Doe"
+          },
+          "businessId": {
+            "type": "string",
+            "description": "The ID of the business the employee belongs to",
+            "example": "uuid-of-business"
+          },
+          "userId": {
+            "type": "string",
+            "description": "The ID of the user linked to the employee (optional)",
+            "example": "uuid-of-user"
+          }
+        },
+        "required": [
+          "fullName",
+          "businessId"
+        ]
+      },
+      "UpdateEmployeeDto": {
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "type": "string",
+            "description": "The full name of the employee",
+            "example": "John Doe"
+          },
+          "businessId": {
+            "type": "string",
+            "description": "The ID of the business the employee belongs to",
+            "example": "uuid-of-business"
+          },
+          "userId": {
+            "type": "string",
+            "description": "The ID of the user linked to the employee (optional)",
+            "example": "uuid-of-user"
+          }
+        }
+      },
+      "CreateServiceDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the service",
+            "example": "آرایش دائم"
+          },
+          "description": {
+            "type": "string",
+            "description": "A description of the service (optional)",
+            "example": "Permanent makeup service"
+          },
+          "businessId": {
+            "type": "string",
+            "description": "The ID of the business the service belongs to (optional for system services)",
+            "example": "550e8400-e29b-41d4-a716-446655440001"
+          },
+          "parentId": {
+            "type": "string",
+            "description": "The ID of the parent service for hierarchical services (optional)",
+            "example": "550e8400-e29b-41d4-a716-446655440002"
+          },
+          "isSystemService": {
+            "type": "boolean",
+            "description": "Whether the service is a system service (defaults to false)",
+            "example": false,
+            "default": false
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "UpdateServiceDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the service",
+            "example": "آرایش دائم"
+          },
+          "description": {
+            "type": "string",
+            "description": "A description of the service (optional)",
+            "example": "Permanent makeup service"
+          },
+          "businessId": {
+            "type": "string",
+            "description": "The ID of the business the service belongs to (optional for system services)",
+            "example": "550e8400-e29b-41d4-a716-446655440001"
+          },
+          "parentId": {
+            "type": "string",
+            "description": "The ID of the parent service for hierarchical services (optional)",
+            "example": "550e8400-e29b-41d4-a716-446655440002"
+          },
+          "isSystemService": {
+            "type": "boolean",
+            "description": "Whether the service is a system service (defaults to false)",
+            "example": false,
+            "default": false
+          }
+        }
+      },
+      "CreateReminderDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "UpdateReminderDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "CreateUserDto": {
+        "type": "object",
+        "properties": {
+          "phoneNumber": {
+            "type": "string",
+            "description": "Phone number of the user",
+            "example": "+989123456789"
+          },
+          "password": {
+            "type": "string",
+            "description": "Password for the user (if applicable)",
+            "example": "StrongP@ssw0rd!"
+          },
+          "role": {
+            "type": "string",
+            "description": "Role of the user",
+            "enum": [
+              "super_admin",
+              "business_admin",
+              "employee",
+              "customer"
+            ],
+            "default": "customer"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "First name of the user",
+            "example": "Ali"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last name of the user",
+            "example": "Rezaei"
+          }
+        },
+        "required": [
+          "phoneNumber",
+          "role"
+        ]
+      },
+      "OtpRequestDto": {
+        "type": "object",
+        "properties": {
+          "phoneNumber": {
+            "type": "string",
+            "example": "+989123456789",
+            "description": "Phone number in international format"
+          }
+        },
+        "required": [
+          "phoneNumber"
+        ]
+      },
+      "VerifyOtpDto": {
+        "type": "object",
+        "properties": {
+          "phoneNumber": {
+            "type": "string",
+            "example": "+989123456789",
+            "description": "Phone number in international format"
+          },
+          "otp": {
+            "type": "string",
+            "example": "123456",
+            "description": "6-digit verification code"
+          }
+        },
+        "required": [
+          "phoneNumber",
+          "otp"
+        ]
+      },
+      "CreatePriceDto": {
+        "type": "object",
+        "properties": {
+          "serviceId": {
+            "type": "string",
+            "description": "The ID of the non-system service to set the price for",
+            "example": "550e8400-e29b-41d4-a716-446655440002"
+          },
+          "amount": {
+            "type": "number",
+            "description": "The price amount",
+            "example": 49.99
+          }
+        },
+        "required": [
+          "serviceId",
+          "amount"
+        ]
+      },
+      "UpdatePriceDto": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "description": "The updated price amount",
+            "example": 59.99
+          }
+        }
+      },
+      "UpdateScheduleDto": {
+        "type": "object",
+        "properties": {
+          "startTime": {
+            "type": "string",
+            "description": "Start time in HH:mm:ss format (e.g., 09:00:00)",
+            "example": "09:00:00"
+          },
+          "endTime": {
+            "type": "string",
+            "description": "End time in HH:mm:ss format (e.g., 17:00:00)",
+            "example": "17:00:00"
+          },
+          "isClosed": {
+            "type": "boolean",
+            "description": "Whether the day is closed",
+            "example": false
+          }
+        }
+      }
+    }
+  }
+}

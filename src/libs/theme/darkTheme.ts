@@ -1,0 +1,53 @@
+const darkTheme = {
+  palette: {
+    mode: "dark",
+    primary: {
+      main: "#80D4DC",
+      contrastText: "#00363A",
+      container: "#004F54",
+      onContainer: "#9DF0F8",
+    },
+    secondary: {
+      main: "#EEBF6D",
+      contrastText: "#422C00",
+      container: "#5E4100",
+      onContainer: "#FFDEA9",
+    },
+    tertiary: {
+      main: "#B7C7EA",
+      contrastText: "#21304C",
+      container: "#384764",
+      onContainer: "#D7E2FF",
+    },
+    error: {
+      main: "#FFB4AB",
+      contrastText: "#690005",
+      container: "#93000A",
+      onContainer: "#FFDAD6",
+    },
+    background: {
+      default: "#0E1415",
+      paper: "#0E1415",
+    },
+    surface: {
+      main: "#0E1415",
+      onSurface: "#DEE4E4",
+      variant: "#3F4849",
+      onVariant: "#BEC8C9",
+      dim: "#0E1415",
+      bright: "#343A3B",
+      containerLowest: "#090F10",
+      containerLow: "#161D1D",
+      container: "#1A2121",
+      containerHigh: "#252B2C",
+      containerHighest: "#303636",
+    },
+    outline: "#899393",
+    outlineVariant: "#3F4849",
+    shadow: "#000000",
+    scrim: "#000000",
+    inverseSurface: "#DEE4E4",
+    inverseOnSurface: "#2B3232",
+    inversePrimary: "#006970",
+  },
+};

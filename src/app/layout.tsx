@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Box } from "@mui/material";
+import SplashScreen from "@/libs/shared-components/splash-screen/SplashScreen";
+import ClientProvider from "@/libs/theme/ClientProvider";
+
+import "./load-public-fonts.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,11 +28,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="fa" dir="rtl">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} bg-background antialiased`}
       >
-        {children}
+        {/* <SplashScreen /> */}
+        <ClientProvider>{children}</ClientProvider>
       </body>
     </html>
   );
