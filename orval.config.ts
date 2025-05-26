@@ -6,7 +6,7 @@ export default defineConfig({
       target: "./swagger.json", // Path to your NestJS-generated swagger.json
     },
     output: {
-      mode: "split",
+      mode: "tags-split",
       target: "src/libs/api/generated", // Output directory for generated files
       schemas: "src/libs/api/generated/models", // Directory for TypeScript models
       client: "react-query", // Generate React Query hooks
@@ -21,7 +21,7 @@ export default defineConfig({
         },
         mutator: {
           path: "./src/libs/api/factories/apiClientFactory.ts",
-          name: "apiInstance",
+          name: "apiClientFactory",
         },
       },
     },
