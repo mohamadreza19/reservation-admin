@@ -43,7 +43,7 @@ const Profile: FunctionComponent<HeaderProps> = ({
     OnBlurEditName(editedName);
     // TODO: Optional: Save the new name here or call a callback
   };
-  console.log(mylink.data);
+
   const copyBusinessAddress = () => {
     navigator.clipboard.writeText(mylink.data);
   };

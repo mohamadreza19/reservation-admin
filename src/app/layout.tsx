@@ -5,6 +5,7 @@ import "./globals.css";
 import ClientProvider from "@/libs/theme/ClientProvider";
 
 import "./load-public-fonts.css";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "وقتبان-ادمین",
@@ -20,7 +21,9 @@ export default function RootLayout({
     <html lang="fa" dir="rtl">
       <body className={` bg-background antialiased`}>
         {/* <SplashScreen /> */}
-        <ClientProvider>{children}</ClientProvider>
+        <Suspense>
+          <ClientProvider>{children}</ClientProvider>
+        </Suspense>
       </body>
     </html>
   );

@@ -65,7 +65,7 @@ export class AxiosAdapter implements HttpClient {
           console.log("❌ درخواست لغو شد:", error.message);
         } else if (error.response?.status === 401) {
           localStorage.removeItem("access_token");
-          window.location.href = "/login"; // redirect to login
+          // window.location.href = "/login"; // redirect to login
           console.warn("🚫 خطای احراز هویت 401");
         } else if (error.response?.status === 500) {
           console.error("💥 خطای سرور");

@@ -20,8 +20,6 @@ interface LayoutProps {
 }
 
 const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
-  const searchParams = useSearchParams();
-
   return (
     <DefaultLayout AppBar={<></>}>
       <div className="flex flex-col gap-8 items-center justify-center h-screen">

@@ -7,7 +7,6 @@ import { Rtl } from "./rtlCache";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ACCESS_TOKEN_KEY } from "../constants/keys.constants";
 import { useRouter, useSearchParams } from "next/navigation";
-import DefaultLayout from "../shared-components/layouts/DeafultLayout";
 
 interface ClientProviderProps {
   children: ReactNode;
