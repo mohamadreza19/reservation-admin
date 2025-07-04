@@ -5,12 +5,15 @@
  * API for managing reservations
  * OpenAPI spec version: 1.0
  */
+import type { UpdateScheduleDtoDay } from './updateScheduleDtoDay';
 
 export interface UpdateScheduleDto {
+  /** Day of the week or holiday */
+  day?: UpdateScheduleDtoDay;
   /** Start time in HH:mm:ss format (e.g., 09:00:00) */
   startTime?: string;
   /** End time in HH:mm:ss format (e.g., 17:00:00) */
   endTime?: string;
   /** Whether the day is closed */
-  isClosed?: boolean;
+  isOpen?: boolean;
 }

@@ -7,6 +7,7 @@
  */
 import {
   useInfiniteQuery,
+  useMutation,
   useQuery
 } from '@tanstack/react-query';
 import type {
@@ -15,98 +16,162 @@ import type {
   DefinedUseInfiniteQueryResult,
   DefinedUseQueryResult,
   InfiniteData,
+  MutationFunction,
   QueryClient,
   QueryFunction,
   QueryKey,
   UndefinedInitialDataOptions,
   UseInfiniteQueryOptions,
   UseInfiniteQueryResult,
+  UseMutationOptions,
+  UseMutationResult,
   UseQueryOptions,
   UseQueryResult
 } from '@tanstack/react-query';
+
+import type {
+  CreateServiceDto,
+  PaginatedServiceDto,
+  ServicesFindAllParams,
+  ServicesFindByBusinessParams,
+  UpdateServiceDto
+} from '.././models';
 
 import { apiClientFactory } from '../../factories/apiClientFactory';
 
 
 
 
-/**
- * @summary Get services by business ID
- */
-export const findByBusiness = (
-    businessId: string,
+export const servicesCreate = (
+    createServiceDto: CreateServiceDto,
  signal?: AbortSignal
 ) => {
       
       
       return apiClientFactory<void>(
-      {url: `/services/business/${businessId}`, method: 'GET', signal
+      {url: `/services`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: createServiceDto, signal
     },
       );
     }
   
 
-export const getFindByBusinessQueryKey = (businessId: string,) => {
-    return [`/services/business/${businessId}`] as const;
+
+export const getServicesCreateMutationOptions = <TError = void,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof servicesCreate>>, TError,{data: CreateServiceDto}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof servicesCreate>>, TError,{data: CreateServiceDto}, TContext> => {
+
+const mutationKey = ['servicesCreate'];
+const {mutation: mutationOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof servicesCreate>>, {data: CreateServiceDto}> = (props) => {
+          const {data} = props ?? {};
+
+          return  servicesCreate(data,)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type ServicesCreateMutationResult = NonNullable<Awaited<ReturnType<typeof servicesCreate>>>
+    export type ServicesCreateMutationBody = CreateServiceDto
+    export type ServicesCreateMutationError = void
+
+    export const useServicesCreate = <TError = void,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof servicesCreate>>, TError,{data: CreateServiceDto}, TContext>, }
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof servicesCreate>>,
+        TError,
+        {data: CreateServiceDto},
+        TContext
+      > => {
+
+      const mutationOptions = getServicesCreateMutationOptions(options);
+
+      return useMutation(mutationOptions , queryClient);
+    }
+    export const servicesFindAll = (
+    params?: ServicesFindAllParams,
+ signal?: AbortSignal
+) => {
+      
+      
+      return apiClientFactory<PaginatedServiceDto>(
+      {url: `/services`, method: 'GET',
+        params, signal
+    },
+      );
+    }
+  
+
+export const getServicesFindAllQueryKey = (params?: ServicesFindAllParams,) => {
+    return [`/services`, ...(params ? [params]: [])] as const;
     }
 
     
-export const getFindByBusinessInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof findByBusiness>>>, TError = void>(businessId: string, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof findByBusiness>>, TError, TData>>, }
+export const getServicesFindAllInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof servicesFindAll>>, ServicesFindAllParams['limit']>, TError = unknown>(params?: ServicesFindAllParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof servicesFindAll>>, TError, TData, Awaited<ReturnType<typeof servicesFindAll>>, QueryKey, ServicesFindAllParams['limit']>>, }
 ) => {
 
 const {query: queryOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getFindByBusinessQueryKey(businessId);
+  const queryKey =  queryOptions?.queryKey ?? getServicesFindAllQueryKey(params);
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof findByBusiness>>> = ({ signal }) => findByBusiness(businessId, signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof servicesFindAll>>, QueryKey, ServicesFindAllParams['limit']> = ({ signal, pageParam }) => servicesFindAll({...params, 'limit': pageParam || params?.['limit']}, signal);
 
       
 
       
 
-   return  { queryKey, queryFn, enabled: !!(businessId), ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof findByBusiness>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof servicesFindAll>>, TError, TData, Awaited<ReturnType<typeof servicesFindAll>>, QueryKey, ServicesFindAllParams['limit']> & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
-export type FindByBusinessInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof findByBusiness>>>
-export type FindByBusinessInfiniteQueryError = void
+export type ServicesFindAllInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof servicesFindAll>>>
+export type ServicesFindAllInfiniteQueryError = unknown
 
 
-export function useFindByBusinessInfinite<TData = InfiniteData<Awaited<ReturnType<typeof findByBusiness>>>, TError = void>(
- businessId: string, options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof findByBusiness>>, TError, TData>> & Pick<
+export function useServicesFindAllInfinite<TData = InfiniteData<Awaited<ReturnType<typeof servicesFindAll>>, ServicesFindAllParams['limit']>, TError = unknown>(
+ params: undefined |  ServicesFindAllParams, options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof servicesFindAll>>, TError, TData, Awaited<ReturnType<typeof servicesFindAll>>, QueryKey, ServicesFindAllParams['limit']>> & Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof findByBusiness>>,
+          Awaited<ReturnType<typeof servicesFindAll>>,
           TError,
-          Awaited<ReturnType<typeof findByBusiness>>
+          Awaited<ReturnType<typeof servicesFindAll>>, QueryKey
         > , 'initialData'
       >, }
  , queryClient?: QueryClient
   ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useFindByBusinessInfinite<TData = InfiniteData<Awaited<ReturnType<typeof findByBusiness>>>, TError = void>(
- businessId: string, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof findByBusiness>>, TError, TData>> & Pick<
+export function useServicesFindAllInfinite<TData = InfiniteData<Awaited<ReturnType<typeof servicesFindAll>>, ServicesFindAllParams['limit']>, TError = unknown>(
+ params?: ServicesFindAllParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof servicesFindAll>>, TError, TData, Awaited<ReturnType<typeof servicesFindAll>>, QueryKey, ServicesFindAllParams['limit']>> & Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof findByBusiness>>,
+          Awaited<ReturnType<typeof servicesFindAll>>,
           TError,
-          Awaited<ReturnType<typeof findByBusiness>>
+          Awaited<ReturnType<typeof servicesFindAll>>, QueryKey
         > , 'initialData'
       >, }
  , queryClient?: QueryClient
   ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useFindByBusinessInfinite<TData = InfiniteData<Awaited<ReturnType<typeof findByBusiness>>>, TError = void>(
- businessId: string, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof findByBusiness>>, TError, TData>>, }
+export function useServicesFindAllInfinite<TData = InfiniteData<Awaited<ReturnType<typeof servicesFindAll>>, ServicesFindAllParams['limit']>, TError = unknown>(
+ params?: ServicesFindAllParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof servicesFindAll>>, TError, TData, Awaited<ReturnType<typeof servicesFindAll>>, QueryKey, ServicesFindAllParams['limit']>>, }
  , queryClient?: QueryClient
   ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get services by business ID
- */
 
-export function useFindByBusinessInfinite<TData = InfiniteData<Awaited<ReturnType<typeof findByBusiness>>>, TError = void>(
- businessId: string, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof findByBusiness>>, TError, TData>>, }
+export function useServicesFindAllInfinite<TData = InfiniteData<Awaited<ReturnType<typeof servicesFindAll>>, ServicesFindAllParams['limit']>, TError = unknown>(
+ params?: ServicesFindAllParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof servicesFindAll>>, TError, TData, Awaited<ReturnType<typeof servicesFindAll>>, QueryKey, ServicesFindAllParams['limit']>>, }
  , queryClient?: QueryClient 
  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const queryOptions = getFindByBusinessInfiniteQueryOptions(businessId,options)
+  const queryOptions = getServicesFindAllInfiniteQueryOptions(params,options)
 
   const query = useInfiniteQuery(queryOptions , queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
@@ -117,62 +182,59 @@ export function useFindByBusinessInfinite<TData = InfiniteData<Awaited<ReturnTyp
 
 
 
-export const getFindByBusinessQueryOptions = <TData = Awaited<ReturnType<typeof findByBusiness>>, TError = void>(businessId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof findByBusiness>>, TError, TData>>, }
+export const getServicesFindAllQueryOptions = <TData = Awaited<ReturnType<typeof servicesFindAll>>, TError = unknown>(params?: ServicesFindAllParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof servicesFindAll>>, TError, TData>>, }
 ) => {
 
 const {query: queryOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getFindByBusinessQueryKey(businessId);
+  const queryKey =  queryOptions?.queryKey ?? getServicesFindAllQueryKey(params);
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof findByBusiness>>> = ({ signal }) => findByBusiness(businessId, signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof servicesFindAll>>> = ({ signal }) => servicesFindAll(params, signal);
 
       
 
       
 
-   return  { queryKey, queryFn, enabled: !!(businessId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof findByBusiness>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof servicesFindAll>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
-export type FindByBusinessQueryResult = NonNullable<Awaited<ReturnType<typeof findByBusiness>>>
-export type FindByBusinessQueryError = void
+export type ServicesFindAllQueryResult = NonNullable<Awaited<ReturnType<typeof servicesFindAll>>>
+export type ServicesFindAllQueryError = unknown
 
 
-export function useFindByBusiness<TData = Awaited<ReturnType<typeof findByBusiness>>, TError = void>(
- businessId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof findByBusiness>>, TError, TData>> & Pick<
+export function useServicesFindAll<TData = Awaited<ReturnType<typeof servicesFindAll>>, TError = unknown>(
+ params: undefined |  ServicesFindAllParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof servicesFindAll>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof findByBusiness>>,
+          Awaited<ReturnType<typeof servicesFindAll>>,
           TError,
-          Awaited<ReturnType<typeof findByBusiness>>
+          Awaited<ReturnType<typeof servicesFindAll>>
         > , 'initialData'
       >, }
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useFindByBusiness<TData = Awaited<ReturnType<typeof findByBusiness>>, TError = void>(
- businessId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof findByBusiness>>, TError, TData>> & Pick<
+export function useServicesFindAll<TData = Awaited<ReturnType<typeof servicesFindAll>>, TError = unknown>(
+ params?: ServicesFindAllParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof servicesFindAll>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof findByBusiness>>,
+          Awaited<ReturnType<typeof servicesFindAll>>,
           TError,
-          Awaited<ReturnType<typeof findByBusiness>>
+          Awaited<ReturnType<typeof servicesFindAll>>
         > , 'initialData'
       >, }
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useFindByBusiness<TData = Awaited<ReturnType<typeof findByBusiness>>, TError = void>(
- businessId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof findByBusiness>>, TError, TData>>, }
+export function useServicesFindAll<TData = Awaited<ReturnType<typeof servicesFindAll>>, TError = unknown>(
+ params?: ServicesFindAllParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof servicesFindAll>>, TError, TData>>, }
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get services by business ID
- */
 
-export function useFindByBusiness<TData = Awaited<ReturnType<typeof findByBusiness>>, TError = void>(
- businessId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof findByBusiness>>, TError, TData>>, }
+export function useServicesFindAll<TData = Awaited<ReturnType<typeof servicesFindAll>>, TError = unknown>(
+ params?: ServicesFindAllParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof servicesFindAll>>, TError, TData>>, }
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const queryOptions = getFindByBusinessQueryOptions(businessId,options)
+  const queryOptions = getServicesFindAllQueryOptions(params,options)
 
   const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
@@ -183,3 +245,418 @@ export function useFindByBusiness<TData = Awaited<ReturnType<typeof findByBusine
 
 
 
+export const get = (
+    
+ signal?: AbortSignal
+) => {
+      
+      
+      return apiClientFactory<void>(
+      {url: `/services/system`, method: 'GET', signal
+    },
+      );
+    }
+  
+
+export const getGetQueryKey = () => {
+    return [`/services/system`] as const;
+    }
+
+    
+export const getGetInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof get>>>, TError = unknown>( options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof get>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetQueryKey();
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof get>>> = ({ signal }) => get(signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof get>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof get>>>
+export type GetInfiniteQueryError = unknown
+
+
+export function useGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof get>>>, TError = unknown>(
+  options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof get>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof get>>,
+          TError,
+          Awaited<ReturnType<typeof get>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof get>>>, TError = unknown>(
+  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof get>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof get>>,
+          TError,
+          Awaited<ReturnType<typeof get>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof get>>>, TError = unknown>(
+  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof get>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof get>>>, TError = unknown>(
+  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof get>>, TError, TData>>, }
+ , queryClient?: QueryClient 
+ ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetInfiniteQueryOptions(options)
+
+  const query = useInfiniteQuery(queryOptions , queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+export const getGetQueryOptions = <TData = Awaited<ReturnType<typeof get>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof get>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetQueryKey();
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof get>>> = ({ signal }) => get(signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof get>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetQueryResult = NonNullable<Awaited<ReturnType<typeof get>>>
+export type GetQueryError = unknown
+
+
+export function useGet<TData = Awaited<ReturnType<typeof get>>, TError = unknown>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof get>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof get>>,
+          TError,
+          Awaited<ReturnType<typeof get>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGet<TData = Awaited<ReturnType<typeof get>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof get>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof get>>,
+          TError,
+          Awaited<ReturnType<typeof get>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGet<TData = Awaited<ReturnType<typeof get>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof get>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGet<TData = Awaited<ReturnType<typeof get>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof get>>, TError, TData>>, }
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetQueryOptions(options)
+
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+export const servicesFindByBusiness = (
+    businessId: string,
+    params?: ServicesFindByBusinessParams,
+ signal?: AbortSignal
+) => {
+      
+      
+      return apiClientFactory<PaginatedServiceDto>(
+      {url: `/services/business/${businessId}`, method: 'GET',
+        params, signal
+    },
+      );
+    }
+  
+
+export const getServicesFindByBusinessQueryKey = (businessId: string,
+    params?: ServicesFindByBusinessParams,) => {
+    return [`/services/business/${businessId}`, ...(params ? [params]: [])] as const;
+    }
+
+    
+export const getServicesFindByBusinessInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof servicesFindByBusiness>>, ServicesFindByBusinessParams['limit']>, TError = void>(businessId: string,
+    params?: ServicesFindByBusinessParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof servicesFindByBusiness>>, TError, TData, Awaited<ReturnType<typeof servicesFindByBusiness>>, QueryKey, ServicesFindByBusinessParams['limit']>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getServicesFindByBusinessQueryKey(businessId,params);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof servicesFindByBusiness>>, QueryKey, ServicesFindByBusinessParams['limit']> = ({ signal, pageParam }) => servicesFindByBusiness(businessId,{...params, 'limit': pageParam || params?.['limit']}, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(businessId), ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof servicesFindByBusiness>>, TError, TData, Awaited<ReturnType<typeof servicesFindByBusiness>>, QueryKey, ServicesFindByBusinessParams['limit']> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type ServicesFindByBusinessInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof servicesFindByBusiness>>>
+export type ServicesFindByBusinessInfiniteQueryError = void
+
+
+export function useServicesFindByBusinessInfinite<TData = InfiniteData<Awaited<ReturnType<typeof servicesFindByBusiness>>, ServicesFindByBusinessParams['limit']>, TError = void>(
+ businessId: string,
+    params: undefined |  ServicesFindByBusinessParams, options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof servicesFindByBusiness>>, TError, TData, Awaited<ReturnType<typeof servicesFindByBusiness>>, QueryKey, ServicesFindByBusinessParams['limit']>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof servicesFindByBusiness>>,
+          TError,
+          Awaited<ReturnType<typeof servicesFindByBusiness>>, QueryKey
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useServicesFindByBusinessInfinite<TData = InfiniteData<Awaited<ReturnType<typeof servicesFindByBusiness>>, ServicesFindByBusinessParams['limit']>, TError = void>(
+ businessId: string,
+    params?: ServicesFindByBusinessParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof servicesFindByBusiness>>, TError, TData, Awaited<ReturnType<typeof servicesFindByBusiness>>, QueryKey, ServicesFindByBusinessParams['limit']>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof servicesFindByBusiness>>,
+          TError,
+          Awaited<ReturnType<typeof servicesFindByBusiness>>, QueryKey
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useServicesFindByBusinessInfinite<TData = InfiniteData<Awaited<ReturnType<typeof servicesFindByBusiness>>, ServicesFindByBusinessParams['limit']>, TError = void>(
+ businessId: string,
+    params?: ServicesFindByBusinessParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof servicesFindByBusiness>>, TError, TData, Awaited<ReturnType<typeof servicesFindByBusiness>>, QueryKey, ServicesFindByBusinessParams['limit']>>, }
+ , queryClient?: QueryClient
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useServicesFindByBusinessInfinite<TData = InfiniteData<Awaited<ReturnType<typeof servicesFindByBusiness>>, ServicesFindByBusinessParams['limit']>, TError = void>(
+ businessId: string,
+    params?: ServicesFindByBusinessParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof servicesFindByBusiness>>, TError, TData, Awaited<ReturnType<typeof servicesFindByBusiness>>, QueryKey, ServicesFindByBusinessParams['limit']>>, }
+ , queryClient?: QueryClient 
+ ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getServicesFindByBusinessInfiniteQueryOptions(businessId,params,options)
+
+  const query = useInfiniteQuery(queryOptions , queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+export const getServicesFindByBusinessQueryOptions = <TData = Awaited<ReturnType<typeof servicesFindByBusiness>>, TError = void>(businessId: string,
+    params?: ServicesFindByBusinessParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof servicesFindByBusiness>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getServicesFindByBusinessQueryKey(businessId,params);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof servicesFindByBusiness>>> = ({ signal }) => servicesFindByBusiness(businessId,params, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(businessId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof servicesFindByBusiness>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type ServicesFindByBusinessQueryResult = NonNullable<Awaited<ReturnType<typeof servicesFindByBusiness>>>
+export type ServicesFindByBusinessQueryError = void
+
+
+export function useServicesFindByBusiness<TData = Awaited<ReturnType<typeof servicesFindByBusiness>>, TError = void>(
+ businessId: string,
+    params: undefined |  ServicesFindByBusinessParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof servicesFindByBusiness>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof servicesFindByBusiness>>,
+          TError,
+          Awaited<ReturnType<typeof servicesFindByBusiness>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useServicesFindByBusiness<TData = Awaited<ReturnType<typeof servicesFindByBusiness>>, TError = void>(
+ businessId: string,
+    params?: ServicesFindByBusinessParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof servicesFindByBusiness>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof servicesFindByBusiness>>,
+          TError,
+          Awaited<ReturnType<typeof servicesFindByBusiness>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useServicesFindByBusiness<TData = Awaited<ReturnType<typeof servicesFindByBusiness>>, TError = void>(
+ businessId: string,
+    params?: ServicesFindByBusinessParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof servicesFindByBusiness>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useServicesFindByBusiness<TData = Awaited<ReturnType<typeof servicesFindByBusiness>>, TError = void>(
+ businessId: string,
+    params?: ServicesFindByBusinessParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof servicesFindByBusiness>>, TError, TData>>, }
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getServicesFindByBusinessQueryOptions(businessId,params,options)
+
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+export const servicesUpdate = (
+    id: string,
+    updateServiceDto: UpdateServiceDto,
+ ) => {
+      
+      
+      return apiClientFactory<void>(
+      {url: `/services/${id}`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: updateServiceDto
+    },
+      );
+    }
+  
+
+
+export const getServicesUpdateMutationOptions = <TError = void,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof servicesUpdate>>, TError,{id: string;data: UpdateServiceDto}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof servicesUpdate>>, TError,{id: string;data: UpdateServiceDto}, TContext> => {
+
+const mutationKey = ['servicesUpdate'];
+const {mutation: mutationOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof servicesUpdate>>, {id: string;data: UpdateServiceDto}> = (props) => {
+          const {id,data} = props ?? {};
+
+          return  servicesUpdate(id,data,)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type ServicesUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof servicesUpdate>>>
+    export type ServicesUpdateMutationBody = UpdateServiceDto
+    export type ServicesUpdateMutationError = void
+
+    export const useServicesUpdate = <TError = void,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof servicesUpdate>>, TError,{id: string;data: UpdateServiceDto}, TContext>, }
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof servicesUpdate>>,
+        TError,
+        {id: string;data: UpdateServiceDto},
+        TContext
+      > => {
+
+      const mutationOptions = getServicesUpdateMutationOptions(options);
+
+      return useMutation(mutationOptions , queryClient);
+    }
+    export const servicesDelete = (
+    id: string,
+ ) => {
+      
+      
+      return apiClientFactory<void>(
+      {url: `/services/${id}`, method: 'DELETE'
+    },
+      );
+    }
+  
+
+
+export const getServicesDeleteMutationOptions = <TError = void,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof servicesDelete>>, TError,{id: string}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof servicesDelete>>, TError,{id: string}, TContext> => {
+
+const mutationKey = ['servicesDelete'];
+const {mutation: mutationOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof servicesDelete>>, {id: string}> = (props) => {
+          const {id} = props ?? {};
+
+          return  servicesDelete(id,)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type ServicesDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof servicesDelete>>>
+    
+    export type ServicesDeleteMutationError = void
+
+    export const useServicesDelete = <TError = void,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof servicesDelete>>, TError,{id: string}, TContext>, }
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof servicesDelete>>,
+        TError,
+        {id: string},
+        TContext
+      > => {
+
+      const mutationOptions = getServicesDeleteMutationOptions(options);
+
+      return useMutation(mutationOptions , queryClient);
+    }
+    

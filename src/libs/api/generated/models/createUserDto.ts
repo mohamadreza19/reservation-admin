@@ -14,6 +14,8 @@ export interface CreateUserDto {
   password?: string;
   /** Role of the user */
   role: CreateUserDtoRole;
+  /** userName */
+  userName?: string;
   /** First name of the user */
   firstName?: string;
   /** Last name of the user */

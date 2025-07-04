@@ -7,6 +7,7 @@
  */
 import {
   useInfiniteQuery,
+  useMutation,
   useQuery
 } from '@tanstack/react-query';
 import type {
@@ -15,22 +16,87 @@ import type {
   DefinedUseInfiniteQueryResult,
   DefinedUseQueryResult,
   InfiniteData,
+  MutationFunction,
   QueryClient,
   QueryFunction,
   QueryKey,
   UndefinedInitialDataOptions,
   UseInfiniteQueryOptions,
   UseInfiniteQueryResult,
+  UseMutationOptions,
+  UseMutationResult,
   UseQueryOptions,
   UseQueryResult
 } from '@tanstack/react-query';
+
+import type {
+  CreateUserDto
+} from '.././models';
 
 import { apiClientFactory } from '../../factories/apiClientFactory';
 
 
 
 
-export const findAll = (
+export const create = (
+    createUserDto: CreateUserDto,
+ signal?: AbortSignal
+) => {
+      
+      
+      return apiClientFactory<void>(
+      {url: `/user`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: createUserDto, signal
+    },
+      );
+    }
+  
+
+
+export const getCreateMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof create>>, TError,{data: CreateUserDto}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof create>>, TError,{data: CreateUserDto}, TContext> => {
+
+const mutationKey = ['create'];
+const {mutation: mutationOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof create>>, {data: CreateUserDto}> = (props) => {
+          const {data} = props ?? {};
+
+          return  create(data,)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreateMutationResult = NonNullable<Awaited<ReturnType<typeof create>>>
+    export type CreateMutationBody = CreateUserDto
+    export type CreateMutationError = unknown
+
+    export const useCreate = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof create>>, TError,{data: CreateUserDto}, TContext>, }
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof create>>,
+        TError,
+        {data: CreateUserDto},
+        TContext
+      > => {
+
+      const mutationOptions = getCreateMutationOptions(options);
+
+      return useMutation(mutationOptions , queryClient);
+    }
+    export const findAll = (
     
  signal?: AbortSignal
 ) => {
@@ -318,3 +384,59 @@ export function useFindOne<TData = Awaited<ReturnType<typeof findOne>>, TError =
 
 
 
+export const remove = (
+    id: string,
+ ) => {
+      
+      
+      return apiClientFactory<void>(
+      {url: `/user/${id}`, method: 'DELETE'
+    },
+      );
+    }
+  
+
+
+export const getRemoveMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof remove>>, TError,{id: string}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof remove>>, TError,{id: string}, TContext> => {
+
+const mutationKey = ['remove'];
+const {mutation: mutationOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof remove>>, {id: string}> = (props) => {
+          const {id} = props ?? {};
+
+          return  remove(id,)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type RemoveMutationResult = NonNullable<Awaited<ReturnType<typeof remove>>>
+    
+    export type RemoveMutationError = unknown
+
+    export const useRemove = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof remove>>, TError,{id: string}, TContext>, }
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof remove>>,
+        TError,
+        {id: string},
+        TContext
+      > => {
+
+      const mutationOptions = getRemoveMutationOptions(options);
+
+      return useMutation(mutationOptions , queryClient);
+    }
+    

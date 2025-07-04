@@ -30,6 +30,8 @@ import type {
 } from '@tanstack/react-query';
 
 import type {
+  CreateScheduleDto,
+  UpdateIntervalForAllDto,
   UpdateScheduleDto
 } from '.././models';
 
@@ -38,10 +40,264 @@ import { apiClientFactory } from '../../factories/apiClientFactory';
 
 
 
-/**
- * @summary Update a schedule
- */
-export const update = (
+export const schedulesInitiate = (
+    
+ signal?: AbortSignal
+) => {
+      
+      
+      return apiClientFactory<void>(
+      {url: `/schedules/initiate-schedules`, method: 'POST', signal
+    },
+      );
+    }
+  
+
+
+export const getSchedulesInitiateMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof schedulesInitiate>>, TError,void, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof schedulesInitiate>>, TError,void, TContext> => {
+
+const mutationKey = ['schedulesInitiate'];
+const {mutation: mutationOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof schedulesInitiate>>, void> = () => {
+          
+
+          return  schedulesInitiate()
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type SchedulesInitiateMutationResult = NonNullable<Awaited<ReturnType<typeof schedulesInitiate>>>
+    
+    export type SchedulesInitiateMutationError = unknown
+
+    export const useSchedulesInitiate = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof schedulesInitiate>>, TError,void, TContext>, }
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof schedulesInitiate>>,
+        TError,
+        void,
+        TContext
+      > => {
+
+      const mutationOptions = getSchedulesInitiateMutationOptions(options);
+
+      return useMutation(mutationOptions , queryClient);
+    }
+    export const schedulesFindAll = (
+    
+ signal?: AbortSignal
+) => {
+      
+      
+      return apiClientFactory<CreateScheduleDto[]>(
+      {url: `/schedules`, method: 'GET', signal
+    },
+      );
+    }
+  
+
+export const getSchedulesFindAllQueryKey = () => {
+    return [`/schedules`] as const;
+    }
+
+    
+export const getSchedulesFindAllInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof schedulesFindAll>>>, TError = void>( options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof schedulesFindAll>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getSchedulesFindAllQueryKey();
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof schedulesFindAll>>> = ({ signal }) => schedulesFindAll(signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof schedulesFindAll>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type SchedulesFindAllInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof schedulesFindAll>>>
+export type SchedulesFindAllInfiniteQueryError = void
+
+
+export function useSchedulesFindAllInfinite<TData = InfiniteData<Awaited<ReturnType<typeof schedulesFindAll>>>, TError = void>(
+  options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof schedulesFindAll>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof schedulesFindAll>>,
+          TError,
+          Awaited<ReturnType<typeof schedulesFindAll>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useSchedulesFindAllInfinite<TData = InfiniteData<Awaited<ReturnType<typeof schedulesFindAll>>>, TError = void>(
+  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof schedulesFindAll>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof schedulesFindAll>>,
+          TError,
+          Awaited<ReturnType<typeof schedulesFindAll>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useSchedulesFindAllInfinite<TData = InfiniteData<Awaited<ReturnType<typeof schedulesFindAll>>>, TError = void>(
+  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof schedulesFindAll>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useSchedulesFindAllInfinite<TData = InfiniteData<Awaited<ReturnType<typeof schedulesFindAll>>>, TError = void>(
+  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof schedulesFindAll>>, TError, TData>>, }
+ , queryClient?: QueryClient 
+ ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getSchedulesFindAllInfiniteQueryOptions(options)
+
+  const query = useInfiniteQuery(queryOptions , queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+export const getSchedulesFindAllQueryOptions = <TData = Awaited<ReturnType<typeof schedulesFindAll>>, TError = void>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof schedulesFindAll>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getSchedulesFindAllQueryKey();
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof schedulesFindAll>>> = ({ signal }) => schedulesFindAll(signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof schedulesFindAll>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type SchedulesFindAllQueryResult = NonNullable<Awaited<ReturnType<typeof schedulesFindAll>>>
+export type SchedulesFindAllQueryError = void
+
+
+export function useSchedulesFindAll<TData = Awaited<ReturnType<typeof schedulesFindAll>>, TError = void>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof schedulesFindAll>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof schedulesFindAll>>,
+          TError,
+          Awaited<ReturnType<typeof schedulesFindAll>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useSchedulesFindAll<TData = Awaited<ReturnType<typeof schedulesFindAll>>, TError = void>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof schedulesFindAll>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof schedulesFindAll>>,
+          TError,
+          Awaited<ReturnType<typeof schedulesFindAll>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useSchedulesFindAll<TData = Awaited<ReturnType<typeof schedulesFindAll>>, TError = void>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof schedulesFindAll>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useSchedulesFindAll<TData = Awaited<ReturnType<typeof schedulesFindAll>>, TError = void>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof schedulesFindAll>>, TError, TData>>, }
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getSchedulesFindAllQueryOptions(options)
+
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+export const updateIntervalForAll = (
+    updateIntervalForAllDto: UpdateIntervalForAllDto,
+ ) => {
+      
+      
+      return apiClientFactory<void>(
+      {url: `/schedules/interval-for-all`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: updateIntervalForAllDto
+    },
+      );
+    }
+  
+
+
+export const getUpdateIntervalForAllMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateIntervalForAll>>, TError,{data: UpdateIntervalForAllDto}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof updateIntervalForAll>>, TError,{data: UpdateIntervalForAllDto}, TContext> => {
+
+const mutationKey = ['updateIntervalForAll'];
+const {mutation: mutationOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateIntervalForAll>>, {data: UpdateIntervalForAllDto}> = (props) => {
+          const {data} = props ?? {};
+
+          return  updateIntervalForAll(data,)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateIntervalForAllMutationResult = NonNullable<Awaited<ReturnType<typeof updateIntervalForAll>>>
+    export type UpdateIntervalForAllMutationBody = UpdateIntervalForAllDto
+    export type UpdateIntervalForAllMutationError = unknown
+
+    export const useUpdateIntervalForAll = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateIntervalForAll>>, TError,{data: UpdateIntervalForAllDto}, TContext>, }
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof updateIntervalForAll>>,
+        TError,
+        {data: UpdateIntervalForAllDto},
+        TContext
+      > => {
+
+      const mutationOptions = getUpdateIntervalForAllMutationOptions(options);
+
+      return useMutation(mutationOptions , queryClient);
+    }
+    export const schedulesUpdate = (
     id: string,
     updateScheduleDto: UpdateScheduleDto,
  ) => {
@@ -57,11 +313,11 @@ export const update = (
   
 
 
-export const getUpdateMutationOptions = <TError = void,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof update>>, TError,{id: string;data: UpdateScheduleDto}, TContext>, }
-): UseMutationOptions<Awaited<ReturnType<typeof update>>, TError,{id: string;data: UpdateScheduleDto}, TContext> => {
+export const getSchedulesUpdateMutationOptions = <TError = void,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof schedulesUpdate>>, TError,{id: string;data: UpdateScheduleDto}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof schedulesUpdate>>, TError,{id: string;data: UpdateScheduleDto}, TContext> => {
 
-const mutationKey = ['update'];
+const mutationKey = ['schedulesUpdate'];
 const {mutation: mutationOptions} = options ?
       options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
       options
@@ -71,10 +327,10 @@ const {mutation: mutationOptions} = options ?
       
 
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof update>>, {id: string;data: UpdateScheduleDto}> = (props) => {
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof schedulesUpdate>>, {id: string;data: UpdateScheduleDto}> = (props) => {
           const {id,data} = props ?? {};
 
-          return  update(id,data,)
+          return  schedulesUpdate(id,data,)
         }
 
         
@@ -82,232 +338,21 @@ const {mutation: mutationOptions} = options ?
 
   return  { mutationFn, ...mutationOptions }}
 
-    export type UpdateMutationResult = NonNullable<Awaited<ReturnType<typeof update>>>
-    export type UpdateMutationBody = UpdateScheduleDto
-    export type UpdateMutationError = void
+    export type SchedulesUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof schedulesUpdate>>>
+    export type SchedulesUpdateMutationBody = UpdateScheduleDto
+    export type SchedulesUpdateMutationError = void
 
-    /**
- * @summary Update a schedule
- */
-export const useUpdate = <TError = void,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof update>>, TError,{id: string;data: UpdateScheduleDto}, TContext>, }
+    export const useSchedulesUpdate = <TError = void,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof schedulesUpdate>>, TError,{id: string;data: UpdateScheduleDto}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof update>>,
+        Awaited<ReturnType<typeof schedulesUpdate>>,
         TError,
         {id: string;data: UpdateScheduleDto},
         TContext
       > => {
 
-      const mutationOptions = getUpdateMutationOptions(options);
+      const mutationOptions = getSchedulesUpdateMutationOptions(options);
 
       return useMutation(mutationOptions , queryClient);
     }
-    export const initiate = (
     
- signal?: AbortSignal
-) => {
-      
-      
-      return apiClientFactory<void>(
-      {url: `/schedules/initiate-schedules`, method: 'POST', signal
-    },
-      );
-    }
-  
-
-
-export const getInitiateMutationOptions = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof initiate>>, TError,void, TContext>, }
-): UseMutationOptions<Awaited<ReturnType<typeof initiate>>, TError,void, TContext> => {
-
-const mutationKey = ['initiate'];
-const {mutation: mutationOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }};
-
-      
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof initiate>>, void> = () => {
-          
-
-          return  initiate()
-        }
-
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type InitiateMutationResult = NonNullable<Awaited<ReturnType<typeof initiate>>>
-    
-    export type InitiateMutationError = unknown
-
-    export const useInitiate = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof initiate>>, TError,void, TContext>, }
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof initiate>>,
-        TError,
-        void,
-        TContext
-      > => {
-
-      const mutationOptions = getInitiateMutationOptions(options);
-
-      return useMutation(mutationOptions , queryClient);
-    }
-    /**
- * @summary Get all schedules for the business
- */
-export const getSchedules = (
-    
- signal?: AbortSignal
-) => {
-      
-      
-      return apiClientFactory<void>(
-      {url: `/schedules`, method: 'GET', signal
-    },
-      );
-    }
-  
-
-export const getGetSchedulesQueryKey = () => {
-    return [`/schedules`] as const;
-    }
-
-    
-export const getGetSchedulesInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getSchedules>>>, TError = void>( options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getSchedules>>, TError, TData>>, }
-) => {
-
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetSchedulesQueryKey();
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getSchedules>>> = ({ signal }) => getSchedules(signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof getSchedules>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetSchedulesInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getSchedules>>>
-export type GetSchedulesInfiniteQueryError = void
-
-
-export function useGetSchedulesInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getSchedules>>>, TError = void>(
-  options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getSchedules>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getSchedules>>,
-          TError,
-          Awaited<ReturnType<typeof getSchedules>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetSchedulesInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getSchedules>>>, TError = void>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getSchedules>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getSchedules>>,
-          TError,
-          Awaited<ReturnType<typeof getSchedules>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetSchedulesInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getSchedules>>>, TError = void>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getSchedules>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get all schedules for the business
- */
-
-export function useGetSchedulesInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getSchedules>>>, TError = void>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getSchedules>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getGetSchedulesInfiniteQueryOptions(options)
-
-  const query = useInfiniteQuery(queryOptions , queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
-}
-
-
-
-export const getGetSchedulesQueryOptions = <TData = Awaited<ReturnType<typeof getSchedules>>, TError = void>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getSchedules>>, TError, TData>>, }
-) => {
-
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetSchedulesQueryKey();
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getSchedules>>> = ({ signal }) => getSchedules(signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getSchedules>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetSchedulesQueryResult = NonNullable<Awaited<ReturnType<typeof getSchedules>>>
-export type GetSchedulesQueryError = void
-
-
-export function useGetSchedules<TData = Awaited<ReturnType<typeof getSchedules>>, TError = void>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getSchedules>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getSchedules>>,
-          TError,
-          Awaited<ReturnType<typeof getSchedules>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetSchedules<TData = Awaited<ReturnType<typeof getSchedules>>, TError = void>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getSchedules>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getSchedules>>,
-          TError,
-          Awaited<ReturnType<typeof getSchedules>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetSchedules<TData = Awaited<ReturnType<typeof getSchedules>>, TError = void>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getSchedules>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get all schedules for the business
- */
-
-export function useGetSchedules<TData = Awaited<ReturnType<typeof getSchedules>>, TError = void>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getSchedules>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getGetSchedulesQueryOptions(options)
-
-  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
-}
-
-
-

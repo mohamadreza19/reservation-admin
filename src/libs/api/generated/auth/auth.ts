@@ -16,8 +16,10 @@ import type {
 } from '@tanstack/react-query';
 
 import type {
+  LoginDto,
   OtpRequestDto,
-  VerifyOtpDto
+  VerifyOtpDto,
+  VerifyOtpResponseDto
 } from '.././models';
 
 import { apiClientFactory } from '../../factories/apiClientFactory';
@@ -89,7 +91,7 @@ const {mutation: mutationOptions} = options ?
 ) => {
       
       
-      return apiClientFactory<void>(
+      return apiClientFactory<VerifyOtpResponseDto>(
       {url: `/auth/verify-otp`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: verifyOtpDto, signal
@@ -138,6 +140,64 @@ const {mutation: mutationOptions} = options ?
       > => {
 
       const mutationOptions = getVerifyOTPMutationOptions(options);
+
+      return useMutation(mutationOptions , queryClient);
+    }
+    export const adminLogin = (
+    loginDto: LoginDto,
+ signal?: AbortSignal
+) => {
+      
+      
+      return apiClientFactory<VerifyOtpResponseDto>(
+      {url: `/auth/admin-login`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: loginDto, signal
+    },
+      );
+    }
+  
+
+
+export const getAdminLoginMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof adminLogin>>, TError,{data: LoginDto}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof adminLogin>>, TError,{data: LoginDto}, TContext> => {
+
+const mutationKey = ['adminLogin'];
+const {mutation: mutationOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof adminLogin>>, {data: LoginDto}> = (props) => {
+          const {data} = props ?? {};
+
+          return  adminLogin(data,)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type AdminLoginMutationResult = NonNullable<Awaited<ReturnType<typeof adminLogin>>>
+    export type AdminLoginMutationBody = LoginDto
+    export type AdminLoginMutationError = unknown
+
+    export const useAdminLogin = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof adminLogin>>, TError,{data: LoginDto}, TContext>, }
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof adminLogin>>,
+        TError,
+        {data: LoginDto},
+        TContext
+      > => {
+
+      const mutationOptions = getAdminLoginMutationOptions(options);
 
       return useMutation(mutationOptions , queryClient);
     }

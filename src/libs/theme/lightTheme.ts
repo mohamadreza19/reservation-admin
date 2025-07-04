@@ -8,7 +8,11 @@ const lightTheme = createTheme({
   },
   palette: {
     mode: "light",
-    text: {},
+    text: {
+      primary: "#161D1D", // main body text color
+      secondary: "#4F5E7D", // subtitles, hints
+      disabled: "#9E9E9E", // optional
+    },
 
     primary: {
       main: "rgb(0 105 112)",
@@ -44,7 +48,25 @@ const lightTheme = createTheme({
         },
       },
     },
+    MuiDialog: {
+      styleOverrides: {
+        paper: {
+          borderRadius: 16, // adjust this value for more or less rounding
+          padding: 24,
+          minWidth: 400,
+        },
+      },
+    },
   },
 });
 
-export default lightTheme;
+const extendedLightTheme = createTheme(lightTheme, {
+  // palette: {
+  //   onPrimary: lightTheme.palette.augmentColor({
+  //     color: {
+  //       main: "rgb(255 255 255)",
+  //     },
+  //   }),
+  // },
+});
+export default extendedLightTheme;

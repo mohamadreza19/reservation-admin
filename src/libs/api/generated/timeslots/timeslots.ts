@@ -29,12 +29,165 @@ import type {
   UseQueryResult
 } from '@tanstack/react-query';
 
+import type {
+  AvailableDateRangeDto,
+  GetAvailableDateRangeParams,
+  GetStatusResDto,
+  GetTimeslotsByDateParams,
+  TimeslotByDateDto
+} from '.././models';
+
 import { apiClientFactory } from '../../factories/apiClientFactory';
 
 
 
 
-export const create = (
+export const getAvailableDateRange = (
+    params: GetAvailableDateRangeParams,
+ signal?: AbortSignal
+) => {
+      
+      
+      return apiClientFactory<AvailableDateRangeDto[]>(
+      {url: `/timeslots/available-range`, method: 'GET',
+        params, signal
+    },
+      );
+    }
+  
+
+export const getGetAvailableDateRangeQueryKey = (params: GetAvailableDateRangeParams,) => {
+    return [`/timeslots/available-range`, ...(params ? [params]: [])] as const;
+    }
+
+    
+export const getGetAvailableDateRangeInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getAvailableDateRange>>, GetAvailableDateRangeParams['limit']>, TError = unknown>(params: GetAvailableDateRangeParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAvailableDateRange>>, TError, TData, Awaited<ReturnType<typeof getAvailableDateRange>>, QueryKey, GetAvailableDateRangeParams['limit']>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetAvailableDateRangeQueryKey(params);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAvailableDateRange>>, QueryKey, GetAvailableDateRangeParams['limit']> = ({ signal, pageParam }) => getAvailableDateRange({...params, 'limit': pageParam || params?.['limit']}, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAvailableDateRange>>, TError, TData, Awaited<ReturnType<typeof getAvailableDateRange>>, QueryKey, GetAvailableDateRangeParams['limit']> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetAvailableDateRangeInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getAvailableDateRange>>>
+export type GetAvailableDateRangeInfiniteQueryError = unknown
+
+
+export function useGetAvailableDateRangeInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAvailableDateRange>>, GetAvailableDateRangeParams['limit']>, TError = unknown>(
+ params: GetAvailableDateRangeParams, options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAvailableDateRange>>, TError, TData, Awaited<ReturnType<typeof getAvailableDateRange>>, QueryKey, GetAvailableDateRangeParams['limit']>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAvailableDateRange>>,
+          TError,
+          Awaited<ReturnType<typeof getAvailableDateRange>>, QueryKey
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetAvailableDateRangeInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAvailableDateRange>>, GetAvailableDateRangeParams['limit']>, TError = unknown>(
+ params: GetAvailableDateRangeParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAvailableDateRange>>, TError, TData, Awaited<ReturnType<typeof getAvailableDateRange>>, QueryKey, GetAvailableDateRangeParams['limit']>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAvailableDateRange>>,
+          TError,
+          Awaited<ReturnType<typeof getAvailableDateRange>>, QueryKey
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetAvailableDateRangeInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAvailableDateRange>>, GetAvailableDateRangeParams['limit']>, TError = unknown>(
+ params: GetAvailableDateRangeParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAvailableDateRange>>, TError, TData, Awaited<ReturnType<typeof getAvailableDateRange>>, QueryKey, GetAvailableDateRangeParams['limit']>>, }
+ , queryClient?: QueryClient
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetAvailableDateRangeInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAvailableDateRange>>, GetAvailableDateRangeParams['limit']>, TError = unknown>(
+ params: GetAvailableDateRangeParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAvailableDateRange>>, TError, TData, Awaited<ReturnType<typeof getAvailableDateRange>>, QueryKey, GetAvailableDateRangeParams['limit']>>, }
+ , queryClient?: QueryClient 
+ ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetAvailableDateRangeInfiniteQueryOptions(params,options)
+
+  const query = useInfiniteQuery(queryOptions , queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+export const getGetAvailableDateRangeQueryOptions = <TData = Awaited<ReturnType<typeof getAvailableDateRange>>, TError = unknown>(params: GetAvailableDateRangeParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAvailableDateRange>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetAvailableDateRangeQueryKey(params);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAvailableDateRange>>> = ({ signal }) => getAvailableDateRange(params, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getAvailableDateRange>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetAvailableDateRangeQueryResult = NonNullable<Awaited<ReturnType<typeof getAvailableDateRange>>>
+export type GetAvailableDateRangeQueryError = unknown
+
+
+export function useGetAvailableDateRange<TData = Awaited<ReturnType<typeof getAvailableDateRange>>, TError = unknown>(
+ params: GetAvailableDateRangeParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAvailableDateRange>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAvailableDateRange>>,
+          TError,
+          Awaited<ReturnType<typeof getAvailableDateRange>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetAvailableDateRange<TData = Awaited<ReturnType<typeof getAvailableDateRange>>, TError = unknown>(
+ params: GetAvailableDateRangeParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAvailableDateRange>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAvailableDateRange>>,
+          TError,
+          Awaited<ReturnType<typeof getAvailableDateRange>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetAvailableDateRange<TData = Awaited<ReturnType<typeof getAvailableDateRange>>, TError = unknown>(
+ params: GetAvailableDateRangeParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAvailableDateRange>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetAvailableDateRange<TData = Awaited<ReturnType<typeof getAvailableDateRange>>, TError = unknown>(
+ params: GetAvailableDateRangeParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAvailableDateRange>>, TError, TData>>, }
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetAvailableDateRangeQueryOptions(params,options)
+
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+export const timeslotsCreate = (
     
  signal?: AbortSignal
 ) => {
@@ -48,11 +201,11 @@ export const create = (
   
 
 
-export const getCreateMutationOptions = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof create>>, TError,void, TContext>, }
-): UseMutationOptions<Awaited<ReturnType<typeof create>>, TError,void, TContext> => {
+export const getTimeslotsCreateMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof timeslotsCreate>>, TError,void, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof timeslotsCreate>>, TError,void, TContext> => {
 
-const mutationKey = ['create'];
+const mutationKey = ['timeslotsCreate'];
 const {mutation: mutationOptions} = options ?
       options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
       options
@@ -62,10 +215,10 @@ const {mutation: mutationOptions} = options ?
       
 
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof create>>, void> = () => {
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof timeslotsCreate>>, void> = () => {
           
 
-          return  create()
+          return  timeslotsCreate()
         }
 
         
@@ -73,94 +226,95 @@ const {mutation: mutationOptions} = options ?
 
   return  { mutationFn, ...mutationOptions }}
 
-    export type CreateMutationResult = NonNullable<Awaited<ReturnType<typeof create>>>
+    export type TimeslotsCreateMutationResult = NonNullable<Awaited<ReturnType<typeof timeslotsCreate>>>
     
-    export type CreateMutationError = unknown
+    export type TimeslotsCreateMutationError = unknown
 
-    export const useCreate = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof create>>, TError,void, TContext>, }
+    export const useTimeslotsCreate = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof timeslotsCreate>>, TError,void, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof create>>,
+        Awaited<ReturnType<typeof timeslotsCreate>>,
         TError,
         void,
         TContext
       > => {
 
-      const mutationOptions = getCreateMutationOptions(options);
+      const mutationOptions = getTimeslotsCreateMutationOptions(options);
 
       return useMutation(mutationOptions , queryClient);
     }
-    export const getAll = (
-    
+    export const getTimeslotsByDate = (
+    params: GetTimeslotsByDateParams,
  signal?: AbortSignal
 ) => {
       
       
-      return apiClientFactory<void>(
-      {url: `/timeslots`, method: 'GET', signal
+      return apiClientFactory<TimeslotByDateDto[]>(
+      {url: `/timeslots/by-date`, method: 'GET',
+        params, signal
     },
       );
     }
   
 
-export const getGetAllQueryKey = () => {
-    return [`/timeslots`] as const;
+export const getGetTimeslotsByDateQueryKey = (params: GetTimeslotsByDateParams,) => {
+    return [`/timeslots/by-date`, ...(params ? [params]: [])] as const;
     }
 
     
-export const getGetAllInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getAll>>>, TError = unknown>( options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAll>>, TError, TData>>, }
+export const getGetTimeslotsByDateInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getTimeslotsByDate>>, GetTimeslotsByDateParams['limit']>, TError = void>(params: GetTimeslotsByDateParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getTimeslotsByDate>>, TError, TData, Awaited<ReturnType<typeof getTimeslotsByDate>>, QueryKey, GetTimeslotsByDateParams['limit']>>, }
 ) => {
 
 const {query: queryOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetAllQueryKey();
+  const queryKey =  queryOptions?.queryKey ?? getGetTimeslotsByDateQueryKey(params);
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAll>>> = ({ signal }) => getAll(signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getTimeslotsByDate>>, QueryKey, GetTimeslotsByDateParams['limit']> = ({ signal, pageParam }) => getTimeslotsByDate({...params, 'limit': pageParam || params?.['limit']}, signal);
 
       
 
       
 
-   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAll>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof getTimeslotsByDate>>, TError, TData, Awaited<ReturnType<typeof getTimeslotsByDate>>, QueryKey, GetTimeslotsByDateParams['limit']> & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
-export type GetAllInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getAll>>>
-export type GetAllInfiniteQueryError = unknown
+export type GetTimeslotsByDateInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getTimeslotsByDate>>>
+export type GetTimeslotsByDateInfiniteQueryError = void
 
 
-export function useGetAllInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAll>>>, TError = unknown>(
-  options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAll>>, TError, TData>> & Pick<
+export function useGetTimeslotsByDateInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getTimeslotsByDate>>, GetTimeslotsByDateParams['limit']>, TError = void>(
+ params: GetTimeslotsByDateParams, options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getTimeslotsByDate>>, TError, TData, Awaited<ReturnType<typeof getTimeslotsByDate>>, QueryKey, GetTimeslotsByDateParams['limit']>> & Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getAll>>,
+          Awaited<ReturnType<typeof getTimeslotsByDate>>,
           TError,
-          Awaited<ReturnType<typeof getAll>>
+          Awaited<ReturnType<typeof getTimeslotsByDate>>, QueryKey
         > , 'initialData'
       >, }
  , queryClient?: QueryClient
   ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetAllInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAll>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAll>>, TError, TData>> & Pick<
+export function useGetTimeslotsByDateInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getTimeslotsByDate>>, GetTimeslotsByDateParams['limit']>, TError = void>(
+ params: GetTimeslotsByDateParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getTimeslotsByDate>>, TError, TData, Awaited<ReturnType<typeof getTimeslotsByDate>>, QueryKey, GetTimeslotsByDateParams['limit']>> & Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getAll>>,
+          Awaited<ReturnType<typeof getTimeslotsByDate>>,
           TError,
-          Awaited<ReturnType<typeof getAll>>
+          Awaited<ReturnType<typeof getTimeslotsByDate>>, QueryKey
         > , 'initialData'
       >, }
  , queryClient?: QueryClient
   ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetAllInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAll>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAll>>, TError, TData>>, }
+export function useGetTimeslotsByDateInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getTimeslotsByDate>>, GetTimeslotsByDateParams['limit']>, TError = void>(
+ params: GetTimeslotsByDateParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getTimeslotsByDate>>, TError, TData, Awaited<ReturnType<typeof getTimeslotsByDate>>, QueryKey, GetTimeslotsByDateParams['limit']>>, }
  , queryClient?: QueryClient
   ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 
-export function useGetAllInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAll>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAll>>, TError, TData>>, }
+export function useGetTimeslotsByDateInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getTimeslotsByDate>>, GetTimeslotsByDateParams['limit']>, TError = void>(
+ params: GetTimeslotsByDateParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getTimeslotsByDate>>, TError, TData, Awaited<ReturnType<typeof getTimeslotsByDate>>, QueryKey, GetTimeslotsByDateParams['limit']>>, }
  , queryClient?: QueryClient 
  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const queryOptions = getGetAllInfiniteQueryOptions(options)
+  const queryOptions = getGetTimeslotsByDateInfiniteQueryOptions(params,options)
 
   const query = useInfiniteQuery(queryOptions , queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
@@ -171,59 +325,59 @@ export function useGetAllInfinite<TData = InfiniteData<Awaited<ReturnType<typeof
 
 
 
-export const getGetAllQueryOptions = <TData = Awaited<ReturnType<typeof getAll>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAll>>, TError, TData>>, }
+export const getGetTimeslotsByDateQueryOptions = <TData = Awaited<ReturnType<typeof getTimeslotsByDate>>, TError = void>(params: GetTimeslotsByDateParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTimeslotsByDate>>, TError, TData>>, }
 ) => {
 
 const {query: queryOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetAllQueryKey();
+  const queryKey =  queryOptions?.queryKey ?? getGetTimeslotsByDateQueryKey(params);
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAll>>> = ({ signal }) => getAll(signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getTimeslotsByDate>>> = ({ signal }) => getTimeslotsByDate(params, signal);
 
       
 
       
 
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getAll>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getTimeslotsByDate>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
-export type GetAllQueryResult = NonNullable<Awaited<ReturnType<typeof getAll>>>
-export type GetAllQueryError = unknown
+export type GetTimeslotsByDateQueryResult = NonNullable<Awaited<ReturnType<typeof getTimeslotsByDate>>>
+export type GetTimeslotsByDateQueryError = void
 
 
-export function useGetAll<TData = Awaited<ReturnType<typeof getAll>>, TError = unknown>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAll>>, TError, TData>> & Pick<
+export function useGetTimeslotsByDate<TData = Awaited<ReturnType<typeof getTimeslotsByDate>>, TError = void>(
+ params: GetTimeslotsByDateParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTimeslotsByDate>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getAll>>,
+          Awaited<ReturnType<typeof getTimeslotsByDate>>,
           TError,
-          Awaited<ReturnType<typeof getAll>>
+          Awaited<ReturnType<typeof getTimeslotsByDate>>
         > , 'initialData'
       >, }
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetAll<TData = Awaited<ReturnType<typeof getAll>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAll>>, TError, TData>> & Pick<
+export function useGetTimeslotsByDate<TData = Awaited<ReturnType<typeof getTimeslotsByDate>>, TError = void>(
+ params: GetTimeslotsByDateParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTimeslotsByDate>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getAll>>,
+          Awaited<ReturnType<typeof getTimeslotsByDate>>,
           TError,
-          Awaited<ReturnType<typeof getAll>>
+          Awaited<ReturnType<typeof getTimeslotsByDate>>
         > , 'initialData'
       >, }
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetAll<TData = Awaited<ReturnType<typeof getAll>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAll>>, TError, TData>>, }
+export function useGetTimeslotsByDate<TData = Awaited<ReturnType<typeof getTimeslotsByDate>>, TError = void>(
+ params: GetTimeslotsByDateParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTimeslotsByDate>>, TError, TData>>, }
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 
-export function useGetAll<TData = Awaited<ReturnType<typeof getAll>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAll>>, TError, TData>>, }
+export function useGetTimeslotsByDate<TData = Awaited<ReturnType<typeof getTimeslotsByDate>>, TError = void>(
+ params: GetTimeslotsByDateParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTimeslotsByDate>>, TError, TData>>, }
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const queryOptions = getGetAllQueryOptions(options)
+  const queryOptions = getGetTimeslotsByDateQueryOptions(params,options)
 
   const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
@@ -234,59 +388,147 @@ export function useGetAll<TData = Awaited<ReturnType<typeof getAll>>, TError = u
 
 
 
-export const deleteAll = (
+export const timeslotsStatus = (
     
- ) => {
+ signal?: AbortSignal
+) => {
       
       
-      return apiClientFactory<void>(
-      {url: `/timeslots`, method: 'DELETE'
+      return apiClientFactory<GetStatusResDto>(
+      {url: `/timeslots/status`, method: 'GET', signal
     },
       );
     }
   
 
+export const getTimeslotsStatusQueryKey = () => {
+    return [`/timeslots/status`] as const;
+    }
 
-export const getDeleteAllMutationOptions = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteAll>>, TError,void, TContext>, }
-): UseMutationOptions<Awaited<ReturnType<typeof deleteAll>>, TError,void, TContext> => {
+    
+export const getTimeslotsStatusInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof timeslotsStatus>>>, TError = GetStatusResDto>( options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof timeslotsStatus>>, TError, TData>>, }
+) => {
 
-const mutationKey = ['deleteAll'];
-const {mutation: mutationOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }};
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getTimeslotsStatusQueryKey();
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof timeslotsStatus>>> = ({ signal }) => timeslotsStatus(signal);
 
       
 
+      
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteAll>>, void> = () => {
-          
+   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof timeslotsStatus>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
 
-          return  deleteAll()
-        }
-
-        
+export type TimeslotsStatusInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof timeslotsStatus>>>
+export type TimeslotsStatusInfiniteQueryError = GetStatusResDto
 
 
-  return  { mutationFn, ...mutationOptions }}
+export function useTimeslotsStatusInfinite<TData = InfiniteData<Awaited<ReturnType<typeof timeslotsStatus>>>, TError = GetStatusResDto>(
+  options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof timeslotsStatus>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof timeslotsStatus>>,
+          TError,
+          Awaited<ReturnType<typeof timeslotsStatus>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useTimeslotsStatusInfinite<TData = InfiniteData<Awaited<ReturnType<typeof timeslotsStatus>>>, TError = GetStatusResDto>(
+  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof timeslotsStatus>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof timeslotsStatus>>,
+          TError,
+          Awaited<ReturnType<typeof timeslotsStatus>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useTimeslotsStatusInfinite<TData = InfiniteData<Awaited<ReturnType<typeof timeslotsStatus>>>, TError = GetStatusResDto>(
+  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof timeslotsStatus>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 
-    export type DeleteAllMutationResult = NonNullable<Awaited<ReturnType<typeof deleteAll>>>
-    
-    export type DeleteAllMutationError = unknown
+export function useTimeslotsStatusInfinite<TData = InfiniteData<Awaited<ReturnType<typeof timeslotsStatus>>>, TError = GetStatusResDto>(
+  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof timeslotsStatus>>, TError, TData>>, }
+ , queryClient?: QueryClient 
+ ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-    export const useDeleteAll = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteAll>>, TError,void, TContext>, }
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof deleteAll>>,
-        TError,
-        void,
-        TContext
-      > => {
+  const queryOptions = getTimeslotsStatusInfiniteQueryOptions(options)
 
-      const mutationOptions = getDeleteAllMutationOptions(options);
+  const query = useInfiniteQuery(queryOptions , queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
-      return useMutation(mutationOptions , queryClient);
-    }
-    
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+export const getTimeslotsStatusQueryOptions = <TData = Awaited<ReturnType<typeof timeslotsStatus>>, TError = GetStatusResDto>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof timeslotsStatus>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getTimeslotsStatusQueryKey();
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof timeslotsStatus>>> = ({ signal }) => timeslotsStatus(signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof timeslotsStatus>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type TimeslotsStatusQueryResult = NonNullable<Awaited<ReturnType<typeof timeslotsStatus>>>
+export type TimeslotsStatusQueryError = GetStatusResDto
+
+
+export function useTimeslotsStatus<TData = Awaited<ReturnType<typeof timeslotsStatus>>, TError = GetStatusResDto>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof timeslotsStatus>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof timeslotsStatus>>,
+          TError,
+          Awaited<ReturnType<typeof timeslotsStatus>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useTimeslotsStatus<TData = Awaited<ReturnType<typeof timeslotsStatus>>, TError = GetStatusResDto>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof timeslotsStatus>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof timeslotsStatus>>,
+          TError,
+          Awaited<ReturnType<typeof timeslotsStatus>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useTimeslotsStatus<TData = Awaited<ReturnType<typeof timeslotsStatus>>, TError = GetStatusResDto>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof timeslotsStatus>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useTimeslotsStatus<TData = Awaited<ReturnType<typeof timeslotsStatus>>, TError = GetStatusResDto>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof timeslotsStatus>>, TError, TData>>, }
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getTimeslotsStatusQueryOptions(options)
+
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+

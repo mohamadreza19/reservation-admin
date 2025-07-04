@@ -7,8 +7,6 @@
  */
 
 export interface CreatePriceDto {
-  /** The ID of the non-system service to set the price for */
-  serviceId: string;
   /** The price amount */
-  amount: number;
+  amount: string;
 }

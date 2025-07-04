@@ -20,9 +20,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Customer"
-        ]
+        "tags": ["Customer"]
       },
       "get": {
         "operationId": "findAll",
@@ -32,9 +30,31 @@
             "description": ""
           }
         },
-        "tags": [
-          "Customer"
-        ]
+        "tags": ["Customer"]
+      }
+    },
+    "/customer/profile": {
+      "get": {
+        "operationId": "findProfile",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Customer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "tags": ["Customer"]
       }
     },
     "/customer/{id}": {
@@ -55,9 +75,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Customer"
-        ]
+        "tags": ["Customer"]
       },
       "patch": {
         "operationId": "update",
@@ -86,9 +104,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Customer"
-        ]
+        "tags": ["Customer"]
       },
       "delete": {
         "operationId": "remove",
@@ -107,25 +123,13 @@
             "description": ""
           }
         },
-        "tags": [
-          "Customer"
-        ]
+        "tags": ["Customer"]
       }
     },
     "/business": {
       "post": {
         "operationId": "create",
         "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateBusinessDto"
-              }
-            }
-          }
-        },
         "responses": {
           "201": {
             "description": ""
@@ -134,31 +138,9 @@
         "security": [
           {
             "JWT-auth": []
-          },
-          {
-            "JWT-auth": []
           }
         ],
-        "tags": [
-          "Business"
-        ]
-      },
-      "get": {
-        "operationId": "getAll",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "JWT-auth": []
-          }
-        ],
-        "tags": [
-          "Business"
-        ]
+        "tags": ["Business"]
       }
     },
     "/business/{id}": {
@@ -195,9 +177,7 @@
             "JWT-auth": []
           }
         ],
-        "tags": [
-          "Business"
-        ]
+        "tags": ["Business"]
       },
       "get": {
         "operationId": "getOne",
@@ -221,9 +201,53 @@
             "JWT-auth": []
           }
         ],
-        "tags": [
-          "Business"
-        ]
+        "tags": ["Business"]
+      }
+    },
+    "/business/my-link": {
+      "get": {
+        "operationId": "getMyLink",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "tags": ["Business"]
+      }
+    },
+    "/business/public/{id}": {
+      "get": {
+        "operationId": "getPublicProfile",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Business ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Public business profile retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicBusinessDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Business"]
       }
     },
     "/appointment": {
@@ -250,9 +274,7 @@
             "JWT-auth": []
           }
         ],
-        "tags": [
-          "Appointment"
-        ]
+        "tags": ["Appointment"]
       }
     },
     "/employee": {
@@ -280,9 +302,7 @@
           }
         ],
         "summary": "Create a new employee for the authenticated user’s business",
-        "tags": [
-          "Employee"
-        ]
+        "tags": ["Employee"]
       }
     },
     "/employee/business/{businessId}": {
@@ -310,9 +330,7 @@
           }
         ],
         "summary": "Get all employees for a specific business",
-        "tags": [
-          "Employee"
-        ]
+        "tags": ["Employee"]
       }
     },
     "/employee/{id}": {
@@ -340,9 +358,7 @@
           }
         ],
         "summary": "Get an employee by ID",
-        "tags": [
-          "Employee"
-        ]
+        "tags": ["Employee"]
       },
       "patch": {
         "operationId": "update",
@@ -378,9 +394,7 @@
           }
         ],
         "summary": "Update an employee",
-        "tags": [
-          "Employee"
-        ]
+        "tags": ["Employee"]
       },
       "delete": {
         "operationId": "remove",
@@ -406,9 +420,7 @@
           }
         ],
         "summary": "Delete an employee",
-        "tags": [
-          "Employee"
-        ]
+        "tags": ["Employee"]
       }
     },
     "/services": {
@@ -445,9 +457,7 @@
           }
         ],
         "summary": "Create a new service",
-        "tags": [
-          "services"
-        ]
+        "tags": ["services"]
       },
       "get": {
         "operationId": "findAll",
@@ -494,9 +504,7 @@
           }
         ],
         "summary": "Get all services with pagination and filtering",
-        "tags": [
-          "services"
-        ]
+        "tags": ["services"]
       }
     },
     "/services/business/{businessId}": {
@@ -510,11 +518,48 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number for pagination",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Number of items per page",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "isSystemService",
+            "required": false,
+            "in": "query",
+            "description": "Filter by system services (true) or non-system services (false)",
+            "schema": {
+              "example": true,
+              "type": "boolean"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Business services retrieved successfully"
+            "description": "Business services retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedServiceDto"
+                }
+              }
+            }
           },
           "404": {
             "description": "Business not found"
@@ -526,9 +571,7 @@
           }
         ],
         "summary": "Get services by business ID",
-        "tags": [
-          "services"
-        ]
+        "tags": ["services"]
       }
     },
     "/services/{id}": {
@@ -553,9 +596,7 @@
           }
         },
         "summary": "Get a service by ID",
-        "tags": [
-          "services"
-        ]
+        "tags": ["services"]
       },
       "patch": {
         "operationId": "update",
@@ -594,9 +635,7 @@
           }
         },
         "summary": "Update a service",
-        "tags": [
-          "services"
-        ]
+        "tags": ["services"]
       },
       "delete": {
         "operationId": "remove",
@@ -622,9 +661,7 @@
           }
         },
         "summary": "Delete a service",
-        "tags": [
-          "services"
-        ]
+        "tags": ["services"]
       }
     },
     "/reminder": {
@@ -646,9 +683,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Reminder"
-        ]
+        "tags": ["Reminder"]
       },
       "get": {
         "operationId": "findAll",
@@ -658,9 +693,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Reminder"
-        ]
+        "tags": ["Reminder"]
       }
     },
     "/reminder/{id}": {
@@ -681,9 +714,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Reminder"
-        ]
+        "tags": ["Reminder"]
       },
       "patch": {
         "operationId": "update",
@@ -712,9 +743,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Reminder"
-        ]
+        "tags": ["Reminder"]
       },
       "delete": {
         "operationId": "remove",
@@ -733,9 +762,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Reminder"
-        ]
+        "tags": ["Reminder"]
       }
     },
     "/user": {
@@ -757,9 +784,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "User"
-        ]
+        "tags": ["User"]
       },
       "get": {
         "operationId": "findAll",
@@ -769,9 +794,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "User"
-        ]
+        "tags": ["User"]
       }
     },
     "/user/{id}": {
@@ -792,9 +815,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "User"
-        ]
+        "tags": ["User"]
       },
       "delete": {
         "operationId": "remove",
@@ -813,9 +834,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "User"
-        ]
+        "tags": ["User"]
       }
     },
     "/auth/send-otp": {
@@ -837,9 +856,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Auth"
-        ]
+        "tags": ["Auth"]
       }
     },
     "/auth/verify-otp": {
@@ -857,13 +874,18 @@
           }
         },
         "responses": {
-          "201": {
-            "description": ""
+          "200": {
+            "description": "OTP verified successfully, returns access token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerifyOtpResponseDto"
+                }
+              }
+            }
           }
         },
-        "tags": [
-          "Auth"
-        ]
+        "tags": ["Auth"]
       }
     },
     "/prices": {
@@ -891,9 +913,7 @@
           }
         ],
         "summary": "Create a price for a non-system service",
-        "tags": [
-          "prices"
-        ]
+        "tags": ["prices"]
       }
     },
     "/prices/service/{serviceId}": {
@@ -920,9 +940,7 @@
           }
         ],
         "summary": "Get the price for a service",
-        "tags": [
-          "prices"
-        ]
+        "tags": ["prices"]
       }
     },
     "/prices/{id}": {
@@ -959,9 +977,7 @@
           }
         ],
         "summary": "Update a price",
-        "tags": [
-          "prices"
-        ]
+        "tags": ["prices"]
       },
       "delete": {
         "operationId": "remove",
@@ -986,9 +1002,7 @@
           }
         ],
         "summary": "Delete a price",
-        "tags": [
-          "prices"
-        ]
+        "tags": ["prices"]
       }
     },
     "/schedules/initiate-schedules": {
@@ -1005,9 +1019,7 @@
             "JWT-auth": []
           }
         ],
-        "tags": [
-          "schedules"
-        ]
+        "tags": ["schedules"]
       }
     },
     "/schedules": {
@@ -1028,9 +1040,7 @@
           }
         ],
         "summary": "Get all schedules for the business",
-        "tags": [
-          "schedules"
-        ]
+        "tags": ["schedules"]
       }
     },
     "/schedules/{id}": {
@@ -1073,9 +1083,7 @@
           }
         ],
         "summary": "Update a schedule",
-        "tags": [
-          "schedules"
-        ]
+        "tags": ["schedules"]
       }
     },
     "/timeslots": {
@@ -1092,16 +1100,35 @@
             "JWT-auth": []
           }
         ],
-        "tags": [
-          "timeslots"
-        ]
-      },
+        "tags": ["timeslots"]
+      }
+    },
+    "/timeslots/available-range": {
       "get": {
-        "operationId": "getAll",
-        "parameters": [],
+        "operationId": "getAvailableDateRange",
+        "parameters": [
+          {
+            "name": "businessId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "The range of available dates",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AvailableDateRangeDto"
+                  }
+                }
+              }
+            }
           }
         },
         "security": [
@@ -1109,16 +1136,49 @@
             "JWT-auth": []
           }
         ],
-        "tags": [
-          "timeslots"
-        ]
-      },
-      "delete": {
-        "operationId": "deleteAll",
-        "parameters": [],
+        "tags": ["timeslots"]
+      }
+    },
+    "/timeslots/by-date": {
+      "get": {
+        "operationId": "getTimeslotsByDate",
+        "parameters": [
+          {
+            "name": "businessId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "date",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "List of available timeslots for the specified date",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeslotByDateDto"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid date format"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         },
         "security": [
@@ -1126,9 +1186,7 @@
             "JWT-auth": []
           }
         ],
-        "tags": [
-          "timeslots"
-        ]
+        "tags": ["timeslots"]
       }
     },
     "/": {
@@ -1140,9 +1198,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "App"
-        ]
+        "tags": ["App"]
       }
     }
   },
@@ -1175,35 +1231,85 @@
         "type": "object",
         "properties": {}
       },
-      "CreateBusinessDto": {
+      "CreateUserDto": {
         "type": "object",
         "properties": {
-          "address": {
+          "phoneNumber": {
             "type": "string",
-            "description": "The ID of the user associated with the business",
-            "example": "user123",
-            "nullable": true
+            "description": "Phone number of the user",
+            "example": "+989123456789"
+          },
+          "password": {
+            "type": "string",
+            "description": "Password for the user (if applicable)",
+            "example": "StrongP@ssw0rd!"
+          },
+          "role": {
+            "type": "string",
+            "description": "Role of the user",
+            "enum": ["super_admin", "business_admin", "employee", "customer"],
+            "default": "customer"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "First name of the user",
+            "example": "Ali"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last name of the user",
+            "example": "Rezaei"
+          }
+        },
+        "required": ["phoneNumber", "role"]
+      },
+      "Customer": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "uuid-value"
+          },
+          "userInfo": {
+            "description": "User info associated with the customer",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            ]
+          }
+        },
+        "required": ["id", "userInfo"]
+      },
+      "PublicBusinessDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier of the business",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
           },
           "name": {
             "type": "string",
-            "description": "The name of business",
-            "example": "Beauty Salon"
+            "description": "The name of the business",
+            "example": "Example Coffee Shop"
+          },
+          "address": {
+            "type": "string",
+            "description": "The address of the business",
+            "example": "123 Main Street, City, Country"
           }
-        }
+        },
+        "required": ["id", "name", "address"]
       },
       "UpdateBusinessDto": {
         "type": "object",
         "properties": {
           "address": {
-            "type": "string",
-            "description": "The ID of the user associated with the business",
-            "example": "user123",
-            "nullable": true
+            "type": "string"
           },
           "name": {
-            "type": "string",
-            "description": "The name of business",
-            "example": "Beauty Salon"
+            "type": "string"
           }
         }
       },
@@ -1221,10 +1327,7 @@
             "example": "456789ab-cdef-1234-5678-901234567890"
           }
         },
-        "required": [
-          "serviceId",
-          "timeslotId"
-        ]
+        "required": ["serviceId", "timeslotId"]
       },
       "CreateEmployeeDto": {
         "type": "object",
@@ -1245,10 +1348,7 @@
             "example": "uuid-of-user"
           }
         },
-        "required": [
-          "fullName",
-          "businessId"
-        ]
+        "required": ["fullName", "businessId"]
       },
       "UpdateEmployeeDto": {
         "type": "object",
@@ -1300,9 +1400,81 @@
             "default": false
           }
         },
-        "required": [
-          "name"
-        ]
+        "required": ["name"]
+      },
+      "Service": {
+        "type": "object",
+        "properties": {}
+      },
+      "Price": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier of the price"
+          },
+          "amount": {
+            "type": "number",
+            "description": "Price amount in integer format (e.g. in Tomans)"
+          },
+          "service": {
+            "description": "The service this price belongs to",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Service"
+              }
+            ]
+          }
+        },
+        "required": ["id", "amount", "service"]
+      },
+      "ServiceDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "isSystemService": {
+            "type": "boolean"
+          },
+          "price": {
+            "$ref": "#/components/schemas/Price"
+          },
+          "children": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ServiceDto"
+            }
+          }
+        },
+        "required": ["id", "name", "isSystemService"]
+      },
+      "PaginatedServiceDto": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ServiceDto"
+            }
+          },
+          "total": {
+            "type": "number"
+          },
+          "page": {
+            "type": "number"
+          },
+          "limit": {
+            "type": "number"
+          }
+        },
+        "required": ["data", "total", "page", "limit"]
       },
       "UpdateServiceDto": {
         "type": "object",
@@ -1343,46 +1515,6 @@
         "type": "object",
         "properties": {}
       },
-      "CreateUserDto": {
-        "type": "object",
-        "properties": {
-          "phoneNumber": {
-            "type": "string",
-            "description": "Phone number of the user",
-            "example": "+989123456789"
-          },
-          "password": {
-            "type": "string",
-            "description": "Password for the user (if applicable)",
-            "example": "StrongP@ssw0rd!"
-          },
-          "role": {
-            "type": "string",
-            "description": "Role of the user",
-            "enum": [
-              "super_admin",
-              "business_admin",
-              "employee",
-              "customer"
-            ],
-            "default": "customer"
-          },
-          "firstName": {
-            "type": "string",
-            "description": "First name of the user",
-            "example": "Ali"
-          },
-          "lastName": {
-            "type": "string",
-            "description": "Last name of the user",
-            "example": "Rezaei"
-          }
-        },
-        "required": [
-          "phoneNumber",
-          "role"
-        ]
-      },
       "OtpRequestDto": {
         "type": "object",
         "properties": {
@@ -1392,9 +1524,7 @@
             "description": "Phone number in international format"
           }
         },
-        "required": [
-          "phoneNumber"
-        ]
+        "required": ["phoneNumber"]
       },
       "VerifyOtpDto": {
         "type": "object",
@@ -1410,10 +1540,21 @@
             "description": "6-digit verification code"
           }
         },
-        "required": [
-          "phoneNumber",
-          "otp"
-        ]
+        "required": ["phoneNumber", "otp"]
+      },
+      "VerifyOtpResponseDto": {
+        "type": "object",
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+            "description": "JWT token if verification succeeds"
+          },
+          "isNew": {
+            "type": "boolean"
+          }
+        },
+        "required": ["isNew"]
       },
       "CreatePriceDto": {
         "type": "object",
@@ -1429,10 +1570,7 @@
             "example": 49.99
           }
         },
-        "required": [
-          "serviceId",
-          "amount"
-        ]
+        "required": ["serviceId", "amount"]
       },
       "UpdatePriceDto": {
         "type": "object",
@@ -1463,6 +1601,46 @@
             "example": false
           }
         }
+      },
+      "AvailableDateRangeDto": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string"
+          }
+        },
+        "required": ["date"]
+      },
+      "TimeslotByDateDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the timeslot",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "date": {
+            "type": "string",
+            "description": "Date of the timeslot in YYYY-MM-DD format",
+            "example": "2025-06-01"
+          },
+          "startTime": {
+            "type": "string",
+            "description": "Start time of the timeslot in HH:mm format",
+            "example": "09:00"
+          },
+          "endTime": {
+            "type": "string",
+            "description": "End time of the timeslot in HH:mm format",
+            "example": "09:30"
+          },
+          "isAvailable": {
+            "type": "boolean",
+            "description": "Indicates if the timeslot is available for booking",
+            "example": true
+          }
+        },
+        "required": ["id", "date", "startTime", "endTime", "isAvailable"]
       }
     }
   }

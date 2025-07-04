@@ -5,6 +5,7 @@
  * API for managing reservations
  * OpenAPI spec version: 1.0
  */
+import type { CreatePriceDto } from './createPriceDto';
 
 export interface CreateServiceDto {
   /** The name of the service */
@@ -17,4 +18,5 @@ export interface CreateServiceDto {
   parentId?: string;
   /** Whether the service is a system service (defaults to false) */
   isSystemService?: boolean;
+  price?: CreatePriceDto;
 }

@@ -7,6 +7,7 @@
  */
 import {
   useInfiniteQuery,
+  useMutation,
   useQuery
 } from '@tanstack/react-query';
 import type {
@@ -15,15 +16,22 @@ import type {
   DefinedUseInfiniteQueryResult,
   DefinedUseQueryResult,
   InfiniteData,
+  MutationFunction,
   QueryClient,
   QueryFunction,
   QueryKey,
   UndefinedInitialDataOptions,
   UseInfiniteQueryOptions,
   UseInfiniteQueryResult,
+  UseMutationOptions,
+  UseMutationResult,
   UseQueryOptions,
   UseQueryResult
 } from '@tanstack/react-query';
+
+import type {
+  UpdateEmployeeDto
+} from '.././models';
 
 import { apiClientFactory } from '../../factories/apiClientFactory';
 
@@ -31,6 +39,70 @@ import { apiClientFactory } from '../../factories/apiClientFactory';
 
 
 /**
+ * @summary Update an employee
+ */
+export const update = (
+    id: string,
+    updateEmployeeDto: UpdateEmployeeDto,
+ ) => {
+      
+      
+      return apiClientFactory<void>(
+      {url: `/employee/${id}`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: updateEmployeeDto
+    },
+      );
+    }
+  
+
+
+export const getUpdateMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof update>>, TError,{id: string;data: UpdateEmployeeDto}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof update>>, TError,{id: string;data: UpdateEmployeeDto}, TContext> => {
+
+const mutationKey = ['update'];
+const {mutation: mutationOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof update>>, {id: string;data: UpdateEmployeeDto}> = (props) => {
+          const {id,data} = props ?? {};
+
+          return  update(id,data,)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateMutationResult = NonNullable<Awaited<ReturnType<typeof update>>>
+    export type UpdateMutationBody = UpdateEmployeeDto
+    export type UpdateMutationError = unknown
+
+    /**
+ * @summary Update an employee
+ */
+export const useUpdate = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof update>>, TError,{id: string;data: UpdateEmployeeDto}, TContext>, }
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof update>>,
+        TError,
+        {id: string;data: UpdateEmployeeDto},
+        TContext
+      > => {
+
+      const mutationOptions = getUpdateMutationOptions(options);
+
+      return useMutation(mutationOptions , queryClient);
+    }
+    /**
  * @summary Get all employees for a specific business
  */
 export const findAllForBusiness = (

@@ -1,9 +1,9 @@
 import { defineConfig } from "orval";
-
+console.log(process.env.NEXT_PUBLIC_API_URL);
 export default defineConfig({
   vaghtban: {
     input: {
-      target: "./swagger.json", // Path to your NestJS-generated swagger.json
+      target: "http://localhost:3030/swagger-json", // Path to your NestJS-generated swagger.json
     },
     output: {
       mode: "tags-split",
@@ -12,8 +12,9 @@ export default defineConfig({
 
       clean: true,
       client: "react-query", // Generate React Query hooks
-      mock: true, // Optional: Generate MSW mocks
+      mock: false, // Optional: Generate MSW mocks
       prettier: true, // Format generated files with Prettier
+      indexFiles: true,
 
       override: {
         query: {

@@ -7,11 +7,6 @@
  */
 
 export interface UpdateBusinessDto {
-  /**
-   * The ID of the user associated with the business
-   * @nullable
-   */
-  address?: string | null;
-  /** The name of business */
+  address?: string;
   name?: string;
 }

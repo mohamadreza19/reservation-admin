@@ -6,8 +6,8 @@ import axios, {
   type InternalAxiosRequestConfig,
 } from "axios";
 import type { HttpClient } from "../core/httpClient";
-import Cookies from "universal-cookie";
-import { setLoading } from "@/libs/shared-components";
+// import Cookies from "universal-cookie";
+// import { setLoading } from "@/libs/shared-components";
 import { ErrorHandlerContext } from "../core/error-handling/ErrorHandlerContext";
 import { ServerErrorHandler } from "../core/error-handling/strategies/ServerErrorHandler";
 import { errorStrategyRegistry } from "../core/error-handling/errorStrategyRegistry";
@@ -24,43 +24,33 @@ export class AxiosAdapter implements HttpClient {
 
     this.instance.interceptors.request.use(
       (config: InternalAxiosRequestConfig) => {
-        AxiosAdapter.activeRequests++;
+        const token = localStorage.getItem("access_token");
 
-        setLoading(true);
-
-        const token = localStorage.getItem("token");
-        const cookies = new Cookies();
-        const storedToken = cookies.get("accessToken");
         if (!config.headers) {
-          config.headers = new AxiosHeaders();
+          config.headers = {} as any;
         }
-
-        const headers = AxiosHeaders.from(config.headers || {});
-
-        if (storedToken) {
-          headers.set("Authorization", `Bearer ${storedToken}`);
+        if (token) {
+          config.headers["Authorization"] = `Bearer ${token}`;
         }
 
         // Object.entries(this.customHeaders).forEach(([key, value]) => {
-        //   headers.set(key, value);
+        //   config.headers![key] = value;
         // });
+
         return config;
       },
-      (error) => {
-        setLoading(false); // Emit loading state as false on error
-        return Promise.reject(error);
-      }
+      (error) => Promise.reject(error)
     );
+
     this.instance.interceptors.response.use(
       (response) => {
-        console.log(response);
-        setLoading(false);
+        // setLoading(false);
         return response;
       },
       (error: any) => {
         console.log(error);
 
-        setLoading(false);
+        // setLoading(false);
 
         const context = new ErrorHandlerContext(new ServerErrorHandler()); // default
         const strategy = errorStrategyRegistry.find((entry) =>
@@ -74,6 +64,8 @@ export class AxiosAdapter implements HttpClient {
         if (axios.isCancel(error)) {
           console.log("❌ درخواست لغو شد:", error.message);
         } else if (error.response?.status === 401) {
+          localStorage.removeItem("access_token");
+          window.location.href = "/login"; // redirect to login
           console.warn("🚫 خطای احراز هویت 401");
         } else if (error.response?.status === 500) {
           console.error("💥 خطای سرور");
@@ -97,6 +89,9 @@ export class AxiosAdapter implements HttpClient {
 
   put<T, D = unknown>(url: string, data?: D, config?: any): Promise<T> {
     return this.instance.put<T>(url, data, config).then((res) => res.data);
+  }
+  patch<T, D = unknown>(url: string, data?: D, config?: any): Promise<T> {
+    return this.instance.patch<T>(url, data, config).then((res) => res.data);
   }
 
   delete<T>(url: string, config?: any): Promise<T> {
