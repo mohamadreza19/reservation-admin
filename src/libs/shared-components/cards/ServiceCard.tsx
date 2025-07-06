@@ -43,9 +43,9 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
           <Divider />
 
           {/* Price */}
-          {service.price && service.price.length > 0 && (
+          {service.price && service.price && (
             <Typography variant="subtitle1" color="textPrimary">
-              💰 قیمت: {service.price[0].amount.toLocaleString()} تومان
+              💰 قیمت: {service.price.amount.toLocaleString()} تومان
             </Typography>
           )}
         </Stack>

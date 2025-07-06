@@ -19,13 +19,18 @@ export default defineConfig({
       override: {
         query: {
           useQuery: true,
-          useInfinite: true,
+          useInfinite: false,
           useInfiniteQueryParam: "limit",
         },
         mutator: {
           path: "./src/libs/api/factories/apiClientFactory.ts",
           name: "apiClientFactory",
         },
+        // operations: {
+        //   business_getMyLink: {
+        //     responseType: "string",
+        //   },
+        // },
       },
     },
   },

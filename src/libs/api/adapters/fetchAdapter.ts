@@ -5,7 +5,7 @@ import type { HttpClient } from "../core/httpClient";
 export class FetchAdapter implements HttpClient {
   private baseURL: string;
 
-  constructor(baseURL?: string) {
+  constructor(baseURL: string) {
     this.baseURL = baseURL;
   }
   private customHeaders: Record<string, string> = {};
@@ -57,6 +57,9 @@ export class FetchAdapter implements HttpClient {
   }
 
   put<T, D = unknown>(url: string, data?: D, config?: any): Promise<T> {
+    return this.request<T>(url, "PUT", data, config);
+  }
+  patch<T, D = unknown>(url: string, data?: D, config?: any): Promise<T> {
     return this.request<T>(url, "PUT", data, config);
   }
 

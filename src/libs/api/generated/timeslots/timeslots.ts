@@ -6,23 +6,18 @@
  * OpenAPI spec version: 1.0
  */
 import {
-  useInfiniteQuery,
   useMutation,
   useQuery
 } from '@tanstack/react-query';
 import type {
   DataTag,
   DefinedInitialDataOptions,
-  DefinedUseInfiniteQueryResult,
   DefinedUseQueryResult,
-  InfiniteData,
   MutationFunction,
   QueryClient,
   QueryFunction,
   QueryKey,
   UndefinedInitialDataOptions,
-  UseInfiniteQueryOptions,
-  UseInfiniteQueryResult,
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
@@ -61,69 +56,6 @@ export const getGetAvailableDateRangeQueryKey = (params: GetAvailableDateRangePa
     }
 
     
-export const getGetAvailableDateRangeInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getAvailableDateRange>>, GetAvailableDateRangeParams['limit']>, TError = unknown>(params: GetAvailableDateRangeParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAvailableDateRange>>, TError, TData, Awaited<ReturnType<typeof getAvailableDateRange>>, QueryKey, GetAvailableDateRangeParams['limit']>>, }
-) => {
-
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetAvailableDateRangeQueryKey(params);
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAvailableDateRange>>, QueryKey, GetAvailableDateRangeParams['limit']> = ({ signal, pageParam }) => getAvailableDateRange({...params, 'limit': pageParam || params?.['limit']}, signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAvailableDateRange>>, TError, TData, Awaited<ReturnType<typeof getAvailableDateRange>>, QueryKey, GetAvailableDateRangeParams['limit']> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetAvailableDateRangeInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getAvailableDateRange>>>
-export type GetAvailableDateRangeInfiniteQueryError = unknown
-
-
-export function useGetAvailableDateRangeInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAvailableDateRange>>, GetAvailableDateRangeParams['limit']>, TError = unknown>(
- params: GetAvailableDateRangeParams, options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAvailableDateRange>>, TError, TData, Awaited<ReturnType<typeof getAvailableDateRange>>, QueryKey, GetAvailableDateRangeParams['limit']>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getAvailableDateRange>>,
-          TError,
-          Awaited<ReturnType<typeof getAvailableDateRange>>, QueryKey
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetAvailableDateRangeInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAvailableDateRange>>, GetAvailableDateRangeParams['limit']>, TError = unknown>(
- params: GetAvailableDateRangeParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAvailableDateRange>>, TError, TData, Awaited<ReturnType<typeof getAvailableDateRange>>, QueryKey, GetAvailableDateRangeParams['limit']>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getAvailableDateRange>>,
-          TError,
-          Awaited<ReturnType<typeof getAvailableDateRange>>, QueryKey
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetAvailableDateRangeInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAvailableDateRange>>, GetAvailableDateRangeParams['limit']>, TError = unknown>(
- params: GetAvailableDateRangeParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAvailableDateRange>>, TError, TData, Awaited<ReturnType<typeof getAvailableDateRange>>, QueryKey, GetAvailableDateRangeParams['limit']>>, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-
-export function useGetAvailableDateRangeInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAvailableDateRange>>, GetAvailableDateRangeParams['limit']>, TError = unknown>(
- params: GetAvailableDateRangeParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAvailableDateRange>>, TError, TData, Awaited<ReturnType<typeof getAvailableDateRange>>, QueryKey, GetAvailableDateRangeParams['limit']>>, }
- , queryClient?: QueryClient 
- ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getGetAvailableDateRangeInfiniteQueryOptions(params,options)
-
-  const query = useInfiniteQuery(queryOptions , queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
-}
-
-
-
 export const getGetAvailableDateRangeQueryOptions = <TData = Awaited<ReturnType<typeof getAvailableDateRange>>, TError = unknown>(params: GetAvailableDateRangeParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAvailableDateRange>>, TError, TData>>, }
 ) => {
 
@@ -262,69 +194,6 @@ export const getGetTimeslotsByDateQueryKey = (params: GetTimeslotsByDateParams,)
     }
 
     
-export const getGetTimeslotsByDateInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getTimeslotsByDate>>, GetTimeslotsByDateParams['limit']>, TError = void>(params: GetTimeslotsByDateParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getTimeslotsByDate>>, TError, TData, Awaited<ReturnType<typeof getTimeslotsByDate>>, QueryKey, GetTimeslotsByDateParams['limit']>>, }
-) => {
-
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetTimeslotsByDateQueryKey(params);
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getTimeslotsByDate>>, QueryKey, GetTimeslotsByDateParams['limit']> = ({ signal, pageParam }) => getTimeslotsByDate({...params, 'limit': pageParam || params?.['limit']}, signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof getTimeslotsByDate>>, TError, TData, Awaited<ReturnType<typeof getTimeslotsByDate>>, QueryKey, GetTimeslotsByDateParams['limit']> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetTimeslotsByDateInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getTimeslotsByDate>>>
-export type GetTimeslotsByDateInfiniteQueryError = void
-
-
-export function useGetTimeslotsByDateInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getTimeslotsByDate>>, GetTimeslotsByDateParams['limit']>, TError = void>(
- params: GetTimeslotsByDateParams, options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getTimeslotsByDate>>, TError, TData, Awaited<ReturnType<typeof getTimeslotsByDate>>, QueryKey, GetTimeslotsByDateParams['limit']>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getTimeslotsByDate>>,
-          TError,
-          Awaited<ReturnType<typeof getTimeslotsByDate>>, QueryKey
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetTimeslotsByDateInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getTimeslotsByDate>>, GetTimeslotsByDateParams['limit']>, TError = void>(
- params: GetTimeslotsByDateParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getTimeslotsByDate>>, TError, TData, Awaited<ReturnType<typeof getTimeslotsByDate>>, QueryKey, GetTimeslotsByDateParams['limit']>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getTimeslotsByDate>>,
-          TError,
-          Awaited<ReturnType<typeof getTimeslotsByDate>>, QueryKey
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetTimeslotsByDateInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getTimeslotsByDate>>, GetTimeslotsByDateParams['limit']>, TError = void>(
- params: GetTimeslotsByDateParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getTimeslotsByDate>>, TError, TData, Awaited<ReturnType<typeof getTimeslotsByDate>>, QueryKey, GetTimeslotsByDateParams['limit']>>, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-
-export function useGetTimeslotsByDateInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getTimeslotsByDate>>, GetTimeslotsByDateParams['limit']>, TError = void>(
- params: GetTimeslotsByDateParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getTimeslotsByDate>>, TError, TData, Awaited<ReturnType<typeof getTimeslotsByDate>>, QueryKey, GetTimeslotsByDateParams['limit']>>, }
- , queryClient?: QueryClient 
- ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getGetTimeslotsByDateInfiniteQueryOptions(params,options)
-
-  const query = useInfiniteQuery(queryOptions , queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
-}
-
-
-
 export const getGetTimeslotsByDateQueryOptions = <TData = Awaited<ReturnType<typeof getTimeslotsByDate>>, TError = void>(params: GetTimeslotsByDateParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTimeslotsByDate>>, TError, TData>>, }
 ) => {
 
@@ -406,69 +275,6 @@ export const getTimeslotsStatusQueryKey = () => {
     }
 
     
-export const getTimeslotsStatusInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof timeslotsStatus>>>, TError = GetStatusResDto>( options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof timeslotsStatus>>, TError, TData>>, }
-) => {
-
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getTimeslotsStatusQueryKey();
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof timeslotsStatus>>> = ({ signal }) => timeslotsStatus(signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof timeslotsStatus>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type TimeslotsStatusInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof timeslotsStatus>>>
-export type TimeslotsStatusInfiniteQueryError = GetStatusResDto
-
-
-export function useTimeslotsStatusInfinite<TData = InfiniteData<Awaited<ReturnType<typeof timeslotsStatus>>>, TError = GetStatusResDto>(
-  options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof timeslotsStatus>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof timeslotsStatus>>,
-          TError,
-          Awaited<ReturnType<typeof timeslotsStatus>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useTimeslotsStatusInfinite<TData = InfiniteData<Awaited<ReturnType<typeof timeslotsStatus>>>, TError = GetStatusResDto>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof timeslotsStatus>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof timeslotsStatus>>,
-          TError,
-          Awaited<ReturnType<typeof timeslotsStatus>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useTimeslotsStatusInfinite<TData = InfiniteData<Awaited<ReturnType<typeof timeslotsStatus>>>, TError = GetStatusResDto>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof timeslotsStatus>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-
-export function useTimeslotsStatusInfinite<TData = InfiniteData<Awaited<ReturnType<typeof timeslotsStatus>>>, TError = GetStatusResDto>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof timeslotsStatus>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getTimeslotsStatusInfiniteQueryOptions(options)
-
-  const query = useInfiniteQuery(queryOptions , queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
-}
-
-
-
 export const getTimeslotsStatusQueryOptions = <TData = Awaited<ReturnType<typeof timeslotsStatus>>, TError = GetStatusResDto>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof timeslotsStatus>>, TError, TData>>, }
 ) => {
 

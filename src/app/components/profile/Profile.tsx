@@ -45,7 +45,7 @@ const Profile: FunctionComponent<HeaderProps> = ({
   };
 
   const copyBusinessAddress = () => {
-    navigator.clipboard.writeText(mylink.data);
+    navigator.clipboard.writeText(mylink.data as any);
   };
 
   return (

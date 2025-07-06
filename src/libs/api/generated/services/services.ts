@@ -6,23 +6,18 @@
  * OpenAPI spec version: 1.0
  */
 import {
-  useInfiniteQuery,
   useMutation,
   useQuery
 } from '@tanstack/react-query';
 import type {
   DataTag,
   DefinedInitialDataOptions,
-  DefinedUseInfiniteQueryResult,
   DefinedUseQueryResult,
-  InfiniteData,
   MutationFunction,
   QueryClient,
   QueryFunction,
   QueryKey,
   UndefinedInitialDataOptions,
-  UseInfiniteQueryOptions,
-  UseInfiniteQueryResult,
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
@@ -119,69 +114,6 @@ export const getServicesFindAllQueryKey = (params?: ServicesFindAllParams,) => {
     }
 
     
-export const getServicesFindAllInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof servicesFindAll>>, ServicesFindAllParams['limit']>, TError = unknown>(params?: ServicesFindAllParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof servicesFindAll>>, TError, TData, Awaited<ReturnType<typeof servicesFindAll>>, QueryKey, ServicesFindAllParams['limit']>>, }
-) => {
-
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getServicesFindAllQueryKey(params);
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof servicesFindAll>>, QueryKey, ServicesFindAllParams['limit']> = ({ signal, pageParam }) => servicesFindAll({...params, 'limit': pageParam || params?.['limit']}, signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof servicesFindAll>>, TError, TData, Awaited<ReturnType<typeof servicesFindAll>>, QueryKey, ServicesFindAllParams['limit']> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type ServicesFindAllInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof servicesFindAll>>>
-export type ServicesFindAllInfiniteQueryError = unknown
-
-
-export function useServicesFindAllInfinite<TData = InfiniteData<Awaited<ReturnType<typeof servicesFindAll>>, ServicesFindAllParams['limit']>, TError = unknown>(
- params: undefined |  ServicesFindAllParams, options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof servicesFindAll>>, TError, TData, Awaited<ReturnType<typeof servicesFindAll>>, QueryKey, ServicesFindAllParams['limit']>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof servicesFindAll>>,
-          TError,
-          Awaited<ReturnType<typeof servicesFindAll>>, QueryKey
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useServicesFindAllInfinite<TData = InfiniteData<Awaited<ReturnType<typeof servicesFindAll>>, ServicesFindAllParams['limit']>, TError = unknown>(
- params?: ServicesFindAllParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof servicesFindAll>>, TError, TData, Awaited<ReturnType<typeof servicesFindAll>>, QueryKey, ServicesFindAllParams['limit']>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof servicesFindAll>>,
-          TError,
-          Awaited<ReturnType<typeof servicesFindAll>>, QueryKey
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useServicesFindAllInfinite<TData = InfiniteData<Awaited<ReturnType<typeof servicesFindAll>>, ServicesFindAllParams['limit']>, TError = unknown>(
- params?: ServicesFindAllParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof servicesFindAll>>, TError, TData, Awaited<ReturnType<typeof servicesFindAll>>, QueryKey, ServicesFindAllParams['limit']>>, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-
-export function useServicesFindAllInfinite<TData = InfiniteData<Awaited<ReturnType<typeof servicesFindAll>>, ServicesFindAllParams['limit']>, TError = unknown>(
- params?: ServicesFindAllParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof servicesFindAll>>, TError, TData, Awaited<ReturnType<typeof servicesFindAll>>, QueryKey, ServicesFindAllParams['limit']>>, }
- , queryClient?: QueryClient 
- ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getServicesFindAllInfiniteQueryOptions(params,options)
-
-  const query = useInfiniteQuery(queryOptions , queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
-}
-
-
-
 export const getServicesFindAllQueryOptions = <TData = Awaited<ReturnType<typeof servicesFindAll>>, TError = unknown>(params?: ServicesFindAllParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof servicesFindAll>>, TError, TData>>, }
 ) => {
 
@@ -263,69 +195,6 @@ export const getGetQueryKey = () => {
     }
 
     
-export const getGetInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof get>>>, TError = unknown>( options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof get>>, TError, TData>>, }
-) => {
-
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetQueryKey();
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof get>>> = ({ signal }) => get(signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof get>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof get>>>
-export type GetInfiniteQueryError = unknown
-
-
-export function useGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof get>>>, TError = unknown>(
-  options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof get>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof get>>,
-          TError,
-          Awaited<ReturnType<typeof get>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof get>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof get>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof get>>,
-          TError,
-          Awaited<ReturnType<typeof get>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof get>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof get>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-
-export function useGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof get>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof get>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getGetInfiniteQueryOptions(options)
-
-  const query = useInfiniteQuery(queryOptions , queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
-}
-
-
-
 export const getGetQueryOptions = <TData = Awaited<ReturnType<typeof get>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof get>>, TError, TData>>, }
 ) => {
 
@@ -410,74 +279,6 @@ export const getServicesFindByBusinessQueryKey = (businessId: string,
     }
 
     
-export const getServicesFindByBusinessInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof servicesFindByBusiness>>, ServicesFindByBusinessParams['limit']>, TError = void>(businessId: string,
-    params?: ServicesFindByBusinessParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof servicesFindByBusiness>>, TError, TData, Awaited<ReturnType<typeof servicesFindByBusiness>>, QueryKey, ServicesFindByBusinessParams['limit']>>, }
-) => {
-
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getServicesFindByBusinessQueryKey(businessId,params);
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof servicesFindByBusiness>>, QueryKey, ServicesFindByBusinessParams['limit']> = ({ signal, pageParam }) => servicesFindByBusiness(businessId,{...params, 'limit': pageParam || params?.['limit']}, signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, enabled: !!(businessId), ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof servicesFindByBusiness>>, TError, TData, Awaited<ReturnType<typeof servicesFindByBusiness>>, QueryKey, ServicesFindByBusinessParams['limit']> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type ServicesFindByBusinessInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof servicesFindByBusiness>>>
-export type ServicesFindByBusinessInfiniteQueryError = void
-
-
-export function useServicesFindByBusinessInfinite<TData = InfiniteData<Awaited<ReturnType<typeof servicesFindByBusiness>>, ServicesFindByBusinessParams['limit']>, TError = void>(
- businessId: string,
-    params: undefined |  ServicesFindByBusinessParams, options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof servicesFindByBusiness>>, TError, TData, Awaited<ReturnType<typeof servicesFindByBusiness>>, QueryKey, ServicesFindByBusinessParams['limit']>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof servicesFindByBusiness>>,
-          TError,
-          Awaited<ReturnType<typeof servicesFindByBusiness>>, QueryKey
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useServicesFindByBusinessInfinite<TData = InfiniteData<Awaited<ReturnType<typeof servicesFindByBusiness>>, ServicesFindByBusinessParams['limit']>, TError = void>(
- businessId: string,
-    params?: ServicesFindByBusinessParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof servicesFindByBusiness>>, TError, TData, Awaited<ReturnType<typeof servicesFindByBusiness>>, QueryKey, ServicesFindByBusinessParams['limit']>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof servicesFindByBusiness>>,
-          TError,
-          Awaited<ReturnType<typeof servicesFindByBusiness>>, QueryKey
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useServicesFindByBusinessInfinite<TData = InfiniteData<Awaited<ReturnType<typeof servicesFindByBusiness>>, ServicesFindByBusinessParams['limit']>, TError = void>(
- businessId: string,
-    params?: ServicesFindByBusinessParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof servicesFindByBusiness>>, TError, TData, Awaited<ReturnType<typeof servicesFindByBusiness>>, QueryKey, ServicesFindByBusinessParams['limit']>>, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-
-export function useServicesFindByBusinessInfinite<TData = InfiniteData<Awaited<ReturnType<typeof servicesFindByBusiness>>, ServicesFindByBusinessParams['limit']>, TError = void>(
- businessId: string,
-    params?: ServicesFindByBusinessParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof servicesFindByBusiness>>, TError, TData, Awaited<ReturnType<typeof servicesFindByBusiness>>, QueryKey, ServicesFindByBusinessParams['limit']>>, }
- , queryClient?: QueryClient 
- ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getServicesFindByBusinessInfiniteQueryOptions(businessId,params,options)
-
-  const query = useInfiniteQuery(queryOptions , queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
-}
-
-
-
 export const getServicesFindByBusinessQueryOptions = <TData = Awaited<ReturnType<typeof servicesFindByBusiness>>, TError = void>(businessId: string,
     params?: ServicesFindByBusinessParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof servicesFindByBusiness>>, TError, TData>>, }
 ) => {

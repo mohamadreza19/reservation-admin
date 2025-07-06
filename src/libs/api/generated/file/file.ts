@@ -6,23 +6,18 @@
  * OpenAPI spec version: 1.0
  */
 import {
-  useInfiniteQuery,
   useMutation,
   useQuery
 } from '@tanstack/react-query';
 import type {
   DataTag,
   DefinedInitialDataOptions,
-  DefinedUseInfiniteQueryResult,
   DefinedUseQueryResult,
-  InfiniteData,
   MutationFunction,
   QueryClient,
   QueryFunction,
   QueryKey,
   UndefinedInitialDataOptions,
-  UseInfiniteQueryOptions,
-  UseInfiniteQueryResult,
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
@@ -59,74 +54,6 @@ export const getFilesGetQueryKey = (entity: 'business' | 'service',
     }
 
     
-export const getFilesGetInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof filesGet>>>, TError = unknown>(entity: 'business' | 'service',
-    id: string, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof filesGet>>, TError, TData>>, }
-) => {
-
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getFilesGetQueryKey(entity,id);
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof filesGet>>> = ({ signal }) => filesGet(entity,id, signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, enabled: !!(entity && id), ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof filesGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type FilesGetInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof filesGet>>>
-export type FilesGetInfiniteQueryError = unknown
-
-
-export function useFilesGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof filesGet>>>, TError = unknown>(
- entity: 'business' | 'service',
-    id: string, options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof filesGet>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof filesGet>>,
-          TError,
-          Awaited<ReturnType<typeof filesGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useFilesGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof filesGet>>>, TError = unknown>(
- entity: 'business' | 'service',
-    id: string, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof filesGet>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof filesGet>>,
-          TError,
-          Awaited<ReturnType<typeof filesGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useFilesGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof filesGet>>>, TError = unknown>(
- entity: 'business' | 'service',
-    id: string, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof filesGet>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-
-export function useFilesGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof filesGet>>>, TError = unknown>(
- entity: 'business' | 'service',
-    id: string, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof filesGet>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getFilesGetInfiniteQueryOptions(entity,id,options)
-
-  const query = useInfiniteQuery(queryOptions , queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
-}
-
-
-
 export const getFilesGetQueryOptions = <TData = Awaited<ReturnType<typeof filesGet>>, TError = unknown>(entity: 'business' | 'service',
     id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof filesGet>>, TError, TData>>, }
 ) => {

@@ -6,21 +6,16 @@
  * OpenAPI spec version: 1.0
  */
 import {
-  useInfiniteQuery,
   useQuery
 } from '@tanstack/react-query';
 import type {
   DataTag,
   DefinedInitialDataOptions,
-  DefinedUseInfiniteQueryResult,
   DefinedUseQueryResult,
-  InfiniteData,
   QueryClient,
   QueryFunction,
   QueryKey,
   UndefinedInitialDataOptions,
-  UseInfiniteQueryOptions,
-  UseInfiniteQueryResult,
   UseQueryOptions,
   UseQueryResult
 } from '@tanstack/react-query';
@@ -56,72 +51,6 @@ export const getGetSwaggerJsonQueryKey = () => {
     }
 
     
-export const getGetSwaggerJsonInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getSwaggerJson>>>, TError = unknown>( options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getSwaggerJson>>, TError, TData>>, }
-) => {
-
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetSwaggerJsonQueryKey();
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getSwaggerJson>>> = ({ signal }) => getSwaggerJson(signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof getSwaggerJson>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetSwaggerJsonInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getSwaggerJson>>>
-export type GetSwaggerJsonInfiniteQueryError = unknown
-
-
-export function useGetSwaggerJsonInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getSwaggerJson>>>, TError = unknown>(
-  options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getSwaggerJson>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getSwaggerJson>>,
-          TError,
-          Awaited<ReturnType<typeof getSwaggerJson>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetSwaggerJsonInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getSwaggerJson>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getSwaggerJson>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getSwaggerJson>>,
-          TError,
-          Awaited<ReturnType<typeof getSwaggerJson>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetSwaggerJsonInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getSwaggerJson>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getSwaggerJson>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Download the OpenAPI (Swagger) JSON specification
- */
-
-export function useGetSwaggerJsonInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getSwaggerJson>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getSwaggerJson>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getGetSwaggerJsonInfiniteQueryOptions(options)
-
-  const query = useInfiniteQuery(queryOptions , queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
-}
-
-
-
 export const getGetSwaggerJsonQueryOptions = <TData = Awaited<ReturnType<typeof getSwaggerJson>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getSwaggerJson>>, TError, TData>>, }
 ) => {
 

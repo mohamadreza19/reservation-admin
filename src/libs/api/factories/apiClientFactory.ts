@@ -42,6 +42,8 @@ export const apiClientFactory = async <T>({
   responseType,
 }: ApiInstanceParams): Promise<T> => {
   let httpClient: HttpClient;
+  console.log("baseURL", baseURL);
+  console.log("NEXT_PUBLIC_API_URL", process.env.NEXT_PUBLIC_API_URL);
   // ----------------------------
   switch (client) {
     case "fetch":

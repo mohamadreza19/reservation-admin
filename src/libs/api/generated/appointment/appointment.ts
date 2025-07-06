@@ -6,23 +6,18 @@
  * OpenAPI spec version: 1.0
  */
 import {
-  useInfiniteQuery,
   useMutation,
   useQuery
 } from '@tanstack/react-query';
 import type {
   DataTag,
   DefinedInitialDataOptions,
-  DefinedUseInfiniteQueryResult,
   DefinedUseQueryResult,
-  InfiniteData,
   MutationFunction,
   QueryClient,
   QueryFunction,
   QueryKey,
   UndefinedInitialDataOptions,
-  UseInfiniteQueryOptions,
-  UseInfiniteQueryResult,
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
@@ -117,69 +112,6 @@ export const getAppointmentsGetAllQueryKey = (params?: AppointmentsGetAllParams,
     }
 
     
-export const getAppointmentsGetAllInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof appointmentsGetAll>>, AppointmentsGetAllParams['limit']>, TError = unknown>(params?: AppointmentsGetAllParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof appointmentsGetAll>>, TError, TData, Awaited<ReturnType<typeof appointmentsGetAll>>, QueryKey, AppointmentsGetAllParams['limit']>>, }
-) => {
-
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getAppointmentsGetAllQueryKey(params);
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof appointmentsGetAll>>, QueryKey, AppointmentsGetAllParams['limit']> = ({ signal, pageParam }) => appointmentsGetAll({...params, 'limit': pageParam || params?.['limit']}, signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof appointmentsGetAll>>, TError, TData, Awaited<ReturnType<typeof appointmentsGetAll>>, QueryKey, AppointmentsGetAllParams['limit']> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type AppointmentsGetAllInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof appointmentsGetAll>>>
-export type AppointmentsGetAllInfiniteQueryError = unknown
-
-
-export function useAppointmentsGetAllInfinite<TData = InfiniteData<Awaited<ReturnType<typeof appointmentsGetAll>>, AppointmentsGetAllParams['limit']>, TError = unknown>(
- params: undefined |  AppointmentsGetAllParams, options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof appointmentsGetAll>>, TError, TData, Awaited<ReturnType<typeof appointmentsGetAll>>, QueryKey, AppointmentsGetAllParams['limit']>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof appointmentsGetAll>>,
-          TError,
-          Awaited<ReturnType<typeof appointmentsGetAll>>, QueryKey
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useAppointmentsGetAllInfinite<TData = InfiniteData<Awaited<ReturnType<typeof appointmentsGetAll>>, AppointmentsGetAllParams['limit']>, TError = unknown>(
- params?: AppointmentsGetAllParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof appointmentsGetAll>>, TError, TData, Awaited<ReturnType<typeof appointmentsGetAll>>, QueryKey, AppointmentsGetAllParams['limit']>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof appointmentsGetAll>>,
-          TError,
-          Awaited<ReturnType<typeof appointmentsGetAll>>, QueryKey
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useAppointmentsGetAllInfinite<TData = InfiniteData<Awaited<ReturnType<typeof appointmentsGetAll>>, AppointmentsGetAllParams['limit']>, TError = unknown>(
- params?: AppointmentsGetAllParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof appointmentsGetAll>>, TError, TData, Awaited<ReturnType<typeof appointmentsGetAll>>, QueryKey, AppointmentsGetAllParams['limit']>>, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-
-export function useAppointmentsGetAllInfinite<TData = InfiniteData<Awaited<ReturnType<typeof appointmentsGetAll>>, AppointmentsGetAllParams['limit']>, TError = unknown>(
- params?: AppointmentsGetAllParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof appointmentsGetAll>>, TError, TData, Awaited<ReturnType<typeof appointmentsGetAll>>, QueryKey, AppointmentsGetAllParams['limit']>>, }
- , queryClient?: QueryClient 
- ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getAppointmentsGetAllInfiniteQueryOptions(params,options)
-
-  const query = useInfiniteQuery(queryOptions , queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
-}
-
-
-
 export const getAppointmentsGetAllQueryOptions = <TData = Awaited<ReturnType<typeof appointmentsGetAll>>, TError = unknown>(params?: AppointmentsGetAllParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof appointmentsGetAll>>, TError, TData>>, }
 ) => {
 
@@ -261,69 +193,6 @@ export const getLalaQueryKey = () => {
     }
 
     
-export const getLalaInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof lala>>>, TError = unknown>( options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof lala>>, TError, TData>>, }
-) => {
-
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getLalaQueryKey();
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof lala>>> = ({ signal }) => lala(signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof lala>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type LalaInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof lala>>>
-export type LalaInfiniteQueryError = unknown
-
-
-export function useLalaInfinite<TData = InfiniteData<Awaited<ReturnType<typeof lala>>>, TError = unknown>(
-  options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof lala>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof lala>>,
-          TError,
-          Awaited<ReturnType<typeof lala>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useLalaInfinite<TData = InfiniteData<Awaited<ReturnType<typeof lala>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof lala>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof lala>>,
-          TError,
-          Awaited<ReturnType<typeof lala>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useLalaInfinite<TData = InfiniteData<Awaited<ReturnType<typeof lala>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof lala>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-
-export function useLalaInfinite<TData = InfiniteData<Awaited<ReturnType<typeof lala>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof lala>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getLalaInfiniteQueryOptions(options)
-
-  const query = useInfiniteQuery(queryOptions , queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
-}
-
-
-
 export const getLalaQueryOptions = <TData = Awaited<ReturnType<typeof lala>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof lala>>, TError, TData>>, }
 ) => {
 

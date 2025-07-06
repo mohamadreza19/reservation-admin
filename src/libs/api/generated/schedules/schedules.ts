@@ -6,23 +6,18 @@
  * OpenAPI spec version: 1.0
  */
 import {
-  useInfiniteQuery,
   useMutation,
   useQuery
 } from '@tanstack/react-query';
 import type {
   DataTag,
   DefinedInitialDataOptions,
-  DefinedUseInfiniteQueryResult,
   DefinedUseQueryResult,
-  InfiniteData,
   MutationFunction,
   QueryClient,
   QueryFunction,
   QueryKey,
   UndefinedInitialDataOptions,
-  UseInfiniteQueryOptions,
-  UseInfiniteQueryResult,
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
@@ -114,69 +109,6 @@ export const getSchedulesFindAllQueryKey = () => {
     }
 
     
-export const getSchedulesFindAllInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof schedulesFindAll>>>, TError = void>( options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof schedulesFindAll>>, TError, TData>>, }
-) => {
-
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getSchedulesFindAllQueryKey();
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof schedulesFindAll>>> = ({ signal }) => schedulesFindAll(signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof schedulesFindAll>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type SchedulesFindAllInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof schedulesFindAll>>>
-export type SchedulesFindAllInfiniteQueryError = void
-
-
-export function useSchedulesFindAllInfinite<TData = InfiniteData<Awaited<ReturnType<typeof schedulesFindAll>>>, TError = void>(
-  options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof schedulesFindAll>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof schedulesFindAll>>,
-          TError,
-          Awaited<ReturnType<typeof schedulesFindAll>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useSchedulesFindAllInfinite<TData = InfiniteData<Awaited<ReturnType<typeof schedulesFindAll>>>, TError = void>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof schedulesFindAll>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof schedulesFindAll>>,
-          TError,
-          Awaited<ReturnType<typeof schedulesFindAll>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useSchedulesFindAllInfinite<TData = InfiniteData<Awaited<ReturnType<typeof schedulesFindAll>>>, TError = void>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof schedulesFindAll>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-
-export function useSchedulesFindAllInfinite<TData = InfiniteData<Awaited<ReturnType<typeof schedulesFindAll>>>, TError = void>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof schedulesFindAll>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getSchedulesFindAllInfiniteQueryOptions(options)
-
-  const query = useInfiniteQuery(queryOptions , queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
-}
-
-
-
 export const getSchedulesFindAllQueryOptions = <TData = Awaited<ReturnType<typeof schedulesFindAll>>, TError = void>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof schedulesFindAll>>, TError, TData>>, }
 ) => {
 

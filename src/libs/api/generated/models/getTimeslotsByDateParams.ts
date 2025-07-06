@@ -5,8 +5,10 @@
  * API for managing reservations
  * OpenAPI spec version: 1.0
  */
+import type { GetTimeslotsByDateStatus } from './getTimeslotsByDateStatus';
 
 export type GetTimeslotsByDateParams = {
 businessId: string;
 date: string;
+status?: GetTimeslotsByDateStatus;
 };

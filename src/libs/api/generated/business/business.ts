@@ -6,23 +6,18 @@
  * OpenAPI spec version: 1.0
  */
 import {
-  useInfiniteQuery,
   useMutation,
   useQuery
 } from '@tanstack/react-query';
 import type {
   DataTag,
   DefinedInitialDataOptions,
-  DefinedUseInfiniteQueryResult,
   DefinedUseQueryResult,
-  InfiniteData,
   MutationFunction,
   QueryClient,
   QueryFunction,
   QueryKey,
   UndefinedInitialDataOptions,
-  UseInfiniteQueryOptions,
-  UseInfiniteQueryResult,
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
@@ -32,8 +27,7 @@ import type {
 import type {
   BusinessProfileDto,
   PublicBusinessDto,
-  UpdateBusinessDto,
-  _
+  UpdateBusinessDto
 } from '.././models';
 
 import { apiClientFactory } from '../../factories/apiClientFactory';
@@ -172,69 +166,6 @@ export const getGetAllQueryKey = () => {
     }
 
     
-export const getGetAllInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getAll>>>, TError = unknown>( options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAll>>, TError, TData>>, }
-) => {
-
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetAllQueryKey();
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAll>>> = ({ signal }) => getAll(signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAll>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetAllInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getAll>>>
-export type GetAllInfiniteQueryError = unknown
-
-
-export function useGetAllInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAll>>>, TError = unknown>(
-  options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAll>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getAll>>,
-          TError,
-          Awaited<ReturnType<typeof getAll>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetAllInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAll>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAll>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getAll>>,
-          TError,
-          Awaited<ReturnType<typeof getAll>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetAllInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAll>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAll>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-
-export function useGetAllInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAll>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAll>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getGetAllInfiniteQueryOptions(options)
-
-  const query = useInfiniteQuery(queryOptions , queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
-}
-
-
-
 export const getGetAllQueryOptions = <TData = Awaited<ReturnType<typeof getAll>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAll>>, TError, TData>>, }
 ) => {
 
@@ -316,69 +247,6 @@ export const getBusinessGetProfileQueryKey = () => {
     }
 
     
-export const getBusinessGetProfileInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof businessGetProfile>>>, TError = unknown>( options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof businessGetProfile>>, TError, TData>>, }
-) => {
-
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getBusinessGetProfileQueryKey();
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof businessGetProfile>>> = ({ signal }) => businessGetProfile(signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof businessGetProfile>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type BusinessGetProfileInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof businessGetProfile>>>
-export type BusinessGetProfileInfiniteQueryError = unknown
-
-
-export function useBusinessGetProfileInfinite<TData = InfiniteData<Awaited<ReturnType<typeof businessGetProfile>>>, TError = unknown>(
-  options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof businessGetProfile>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof businessGetProfile>>,
-          TError,
-          Awaited<ReturnType<typeof businessGetProfile>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useBusinessGetProfileInfinite<TData = InfiniteData<Awaited<ReturnType<typeof businessGetProfile>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof businessGetProfile>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof businessGetProfile>>,
-          TError,
-          Awaited<ReturnType<typeof businessGetProfile>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useBusinessGetProfileInfinite<TData = InfiniteData<Awaited<ReturnType<typeof businessGetProfile>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof businessGetProfile>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-
-export function useBusinessGetProfileInfinite<TData = InfiniteData<Awaited<ReturnType<typeof businessGetProfile>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof businessGetProfile>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getBusinessGetProfileInfiniteQueryOptions(options)
-
-  const query = useInfiniteQuery(queryOptions , queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
-}
-
-
-
 export const getBusinessGetProfileQueryOptions = <TData = Awaited<ReturnType<typeof businessGetProfile>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof businessGetProfile>>, TError, TData>>, }
 ) => {
 
@@ -448,7 +316,7 @@ export const businessGetMyLink = (
 ) => {
       
       
-      return apiClientFactory<_>(
+      return apiClientFactory<void>(
       {url: `/business/my-link`, method: 'GET', signal
     },
       );
@@ -460,69 +328,6 @@ export const getBusinessGetMyLinkQueryKey = () => {
     }
 
     
-export const getBusinessGetMyLinkInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof businessGetMyLink>>>, TError = unknown>( options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof businessGetMyLink>>, TError, TData>>, }
-) => {
-
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getBusinessGetMyLinkQueryKey();
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof businessGetMyLink>>> = ({ signal }) => businessGetMyLink(signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof businessGetMyLink>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type BusinessGetMyLinkInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof businessGetMyLink>>>
-export type BusinessGetMyLinkInfiniteQueryError = unknown
-
-
-export function useBusinessGetMyLinkInfinite<TData = InfiniteData<Awaited<ReturnType<typeof businessGetMyLink>>>, TError = unknown>(
-  options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof businessGetMyLink>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof businessGetMyLink>>,
-          TError,
-          Awaited<ReturnType<typeof businessGetMyLink>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useBusinessGetMyLinkInfinite<TData = InfiniteData<Awaited<ReturnType<typeof businessGetMyLink>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof businessGetMyLink>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof businessGetMyLink>>,
-          TError,
-          Awaited<ReturnType<typeof businessGetMyLink>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useBusinessGetMyLinkInfinite<TData = InfiniteData<Awaited<ReturnType<typeof businessGetMyLink>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof businessGetMyLink>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-
-export function useBusinessGetMyLinkInfinite<TData = InfiniteData<Awaited<ReturnType<typeof businessGetMyLink>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof businessGetMyLink>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getBusinessGetMyLinkInfiniteQueryOptions(options)
-
-  const query = useInfiniteQuery(queryOptions , queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
-}
-
-
-
 export const getBusinessGetMyLinkQueryOptions = <TData = Awaited<ReturnType<typeof businessGetMyLink>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof businessGetMyLink>>, TError, TData>>, }
 ) => {
 
@@ -604,69 +409,6 @@ export const getGetOneQueryKey = (id: string,) => {
     }
 
     
-export const getGetOneInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getOne>>>, TError = unknown>(id: string, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getOne>>, TError, TData>>, }
-) => {
-
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetOneQueryKey(id);
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getOne>>> = ({ signal }) => getOne(id, signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, enabled: !!(id), ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof getOne>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetOneInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getOne>>>
-export type GetOneInfiniteQueryError = unknown
-
-
-export function useGetOneInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getOne>>>, TError = unknown>(
- id: string, options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getOne>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getOne>>,
-          TError,
-          Awaited<ReturnType<typeof getOne>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetOneInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getOne>>>, TError = unknown>(
- id: string, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getOne>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getOne>>,
-          TError,
-          Awaited<ReturnType<typeof getOne>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetOneInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getOne>>>, TError = unknown>(
- id: string, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getOne>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-
-export function useGetOneInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getOne>>>, TError = unknown>(
- id: string, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getOne>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getGetOneInfiniteQueryOptions(id,options)
-
-  const query = useInfiniteQuery(queryOptions , queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
-}
-
-
-
 export const getGetOneQueryOptions = <TData = Awaited<ReturnType<typeof getOne>>, TError = unknown>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getOne>>, TError, TData>>, }
 ) => {
 
@@ -748,69 +490,6 @@ export const getGetPublicProfileQueryKey = (id: string,) => {
     }
 
     
-export const getGetPublicProfileInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getPublicProfile>>>, TError = unknown>(id: string, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getPublicProfile>>, TError, TData>>, }
-) => {
-
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetPublicProfileQueryKey(id);
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getPublicProfile>>> = ({ signal }) => getPublicProfile(id, signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, enabled: !!(id), ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof getPublicProfile>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetPublicProfileInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getPublicProfile>>>
-export type GetPublicProfileInfiniteQueryError = unknown
-
-
-export function useGetPublicProfileInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getPublicProfile>>>, TError = unknown>(
- id: string, options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getPublicProfile>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getPublicProfile>>,
-          TError,
-          Awaited<ReturnType<typeof getPublicProfile>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetPublicProfileInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getPublicProfile>>>, TError = unknown>(
- id: string, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getPublicProfile>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getPublicProfile>>,
-          TError,
-          Awaited<ReturnType<typeof getPublicProfile>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetPublicProfileInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getPublicProfile>>>, TError = unknown>(
- id: string, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getPublicProfile>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-
-export function useGetPublicProfileInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getPublicProfile>>>, TError = unknown>(
- id: string, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getPublicProfile>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getGetPublicProfileInfiniteQueryOptions(id,options)
-
-  const query = useInfiniteQuery(queryOptions , queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
-}
-
-
-
 export const getGetPublicProfileQueryOptions = <TData = Awaited<ReturnType<typeof getPublicProfile>>, TError = unknown>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getPublicProfile>>, TError, TData>>, }
 ) => {
 

@@ -6,26 +6,26 @@
  * OpenAPI spec version: 1.0
  */
 import {
-  useInfiniteQuery,
+  useMutation,
   useQuery
 } from '@tanstack/react-query';
 import type {
   DataTag,
   DefinedInitialDataOptions,
-  DefinedUseInfiniteQueryResult,
   DefinedUseQueryResult,
-  InfiniteData,
+  MutationFunction,
   QueryClient,
   QueryFunction,
   QueryKey,
   UndefinedInitialDataOptions,
-  UseInfiniteQueryOptions,
-  UseInfiniteQueryResult,
+  UseMutationOptions,
+  UseMutationResult,
   UseQueryOptions,
   UseQueryResult
 } from '@tanstack/react-query';
 
 import type {
+  CreateCustomerDto,
   Customer
 } from '.././models';
 
@@ -52,69 +52,6 @@ export const getFindProfileQueryKey = () => {
     }
 
     
-export const getFindProfileInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof findProfile>>>, TError = unknown>( options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof findProfile>>, TError, TData>>, }
-) => {
-
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getFindProfileQueryKey();
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof findProfile>>> = ({ signal }) => findProfile(signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof findProfile>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type FindProfileInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof findProfile>>>
-export type FindProfileInfiniteQueryError = unknown
-
-
-export function useFindProfileInfinite<TData = InfiniteData<Awaited<ReturnType<typeof findProfile>>>, TError = unknown>(
-  options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof findProfile>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof findProfile>>,
-          TError,
-          Awaited<ReturnType<typeof findProfile>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useFindProfileInfinite<TData = InfiniteData<Awaited<ReturnType<typeof findProfile>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof findProfile>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof findProfile>>,
-          TError,
-          Awaited<ReturnType<typeof findProfile>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useFindProfileInfinite<TData = InfiniteData<Awaited<ReturnType<typeof findProfile>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof findProfile>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-
-export function useFindProfileInfinite<TData = InfiniteData<Awaited<ReturnType<typeof findProfile>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof findProfile>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getFindProfileInfiniteQueryOptions(options)
-
-  const query = useInfiniteQuery(queryOptions , queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
-}
-
-
-
 export const getFindProfileQueryOptions = <TData = Awaited<ReturnType<typeof findProfile>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof findProfile>>, TError, TData>>, }
 ) => {
 
@@ -178,3 +115,62 @@ export function useFindProfile<TData = Awaited<ReturnType<typeof findProfile>>, 
 
 
 
+export const update = (
+    id: string,
+    createCustomerDto: CreateCustomerDto,
+ ) => {
+      
+      
+      return apiClientFactory<void>(
+      {url: `/customer/${id}`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: createCustomerDto
+    },
+      );
+    }
+  
+
+
+export const getUpdateMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof update>>, TError,{id: string;data: CreateCustomerDto}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof update>>, TError,{id: string;data: CreateCustomerDto}, TContext> => {
+
+const mutationKey = ['update'];
+const {mutation: mutationOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof update>>, {id: string;data: CreateCustomerDto}> = (props) => {
+          const {id,data} = props ?? {};
+
+          return  update(id,data,)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateMutationResult = NonNullable<Awaited<ReturnType<typeof update>>>
+    export type UpdateMutationBody = CreateCustomerDto
+    export type UpdateMutationError = unknown
+
+    export const useUpdate = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof update>>, TError,{id: string;data: CreateCustomerDto}, TContext>, }
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof update>>,
+        TError,
+        {id: string;data: CreateCustomerDto},
+        TContext
+      > => {
+
+      const mutationOptions = getUpdateMutationOptions(options);
+
+      return useMutation(mutationOptions , queryClient);
+    }
+    
